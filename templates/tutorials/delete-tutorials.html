@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+        <section id="edit">
+          <div class="form">
+            <h1>You are about to delete your Tutorial</h1>
+
+
+            <form id="delete" class="register-form" method="post" action="{% url 'delete-tutorial' %}">
+                
+                {{ form }}
+                {% csrf_token %}
+
+              <button type="submit">Confirm</button>
+            </form>
+          </div>
+
+        </section>
+    
+{% endblock %}
