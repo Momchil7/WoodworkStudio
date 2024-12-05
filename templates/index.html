@@ -1,13 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    
-        <!-- Home page -->
-        <section id="home">
-          <h1>
-            Share the Your Projects <br />Post Your Projects!
-          </h1>
-          <img src="{% static 'images/cats.png' %}" alt="home" />
-        </section>
-    
+
+
+    <section id="home">
+        <h1>
+            Share Your Projects and Tutorials
+        </h1>
+        <img src="{% static 'images/cats.png' %}" alt="home"/>
+    </section>
+
+    {#        <section id="dashboard">#}
+    {#            {% for project in projects %}#}
+    {#          <div class="post">#}
+    {#            <img#}
+    {#              src="{{ project.images }}"#}
+    {#              alt="{{ project.title }} img"#}
+    {#            />#}
+    {#            <!-- post title -->#}
+    {#            <h3 class="title">{{ project.title }}</h3>#}
+    {#            <p class="description">{{ project.description }}</p>#}
+    {#            <a class="details-btn" href="{% url 'content:project_detail' project.id %}">See More</a>#}
+    {#          </div>#}
+    {#        {% endfor %}#}
+    {##}
+    {##}
+    {#        </section>#}
+
 {% endblock %}

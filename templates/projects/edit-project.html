@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <!-- Edit Post Form -->
+
     <section id="edit">
         <div class="form">
             <h2>Edit Post</h2>
 
-            <form class="edit-form" method="post" action="{% url 'edit-post' post_id=post.id %}">
+            <form class="edit-form" method="post" action="{% url 'content:project_edit' project.id %}">
                 {{ form }}
                 {% csrf_token %}
-                <!-- form button -->
+
                 <button type="submit">Edit</button>
+                <input type="reset" value="Cancel" class="button-9" >
+                <a href="{% url 'content:project_detail' project.id %}" id="edit-btn" >Cancel</a>
             </form>
         </div>
     </section>

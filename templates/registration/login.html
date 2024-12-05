@@ -1,12 +1,12 @@
-{% extends 'common/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 
-    <form method="post">
+    <form method="post" action="{% url 'core:login' %}">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="btn btn-primary ml-2">Login</button>
-        <p> Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+        <p> Don't have an account? <a href="{% url 'core:register' %}">Register here!</a></p>
     </form>
 
 {% endblock %}

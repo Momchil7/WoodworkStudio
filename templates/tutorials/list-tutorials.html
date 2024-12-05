@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Home page -->
+    {#        <section id="home">#}
+    {#          <h1>#}
+    {#            Gallery of Tutorials <br />View and enjoy!#}
+    {#          </h1>#}
+    {#          <img src="{% static 'images/cats.png' %}" alt="home" />#}
+    {#        </section>#}
+
+    {% if tutorials %}
+
+        <h1>
+            Gallery of Tutorials <br/>View and enjoy!
+        </h1>
+    {% else %}
+
+        <h2>No published Tutorials yet...Come back later!</h2>
+    {% endif %}
+    <section id="home">
+
+        <img src="{% static 'images/cats.png' %}" alt="home"/>
+    </section>
+
+    <section id="dashboard">
+
+        {% for tutorial in tutorials %}
+
+            <div class="post">
+
+                <img
+                        src="{{ tutorial.images }}"
+                        alt="{{ tutorial.title }} img"
+                />
+
+                <h3 class="title">{{ tutorial.title }}</h3>
+
+                <p class="description">{{ tutorial.description }}</p>
+                <p class="description">{{ tutorial.created_by }}</p>
+
+                <a class="details-btn" href="{% url 'content:project_detail' tutorial.id %}">See More</a>
+            </div>
+        {% endfor %}
+
+
+    </section>
+
+{% endblock %}

@@ -1,34 +1,71 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-        <!-- Dashboard page -->
+
+    <article>
+
         {% if projects %}
-        <!-- Display a heading if there are posts -->
-        <h2>Published Projects</h2>
+
+            <h2>My Published Projects</h2>
         {% else %}
-        <!-- Display a heading if there are NO posts -->
-        <h2>No published Projects yet.</h2>
+
+            <h2>No published Projects yet...Come back later!</h2>
         {% endif %}
-    
+
         <section id="dashboard">
-          <!-- Display a div with information about each post (if any) -->
+
             {% for project in projects %}
-          <!-- first post -->
-          <div class="post">
-            <!-- post image -->
-            <img
-              src="{{ project.image_url }}"
-              alt="{{ project.title }} img"
-            />
-            <!-- post title -->
-            <h3 class="title">{{ project.title }}</h3>
-            <!-- post content -->
-            <p class="description">{{ project.content }}</p>
-            <!-- post details button -->
-            <a class="details-btn" href="{% url 'details-project' project_id=post.id %}">See More</a>
-          </div>
-        {% endfor %}
+
+                <div class="post">
+
+                    <img
+                            src="{{ project.images }}"
+                            alt="{{ project.title }} img"
+                    />
+
+                    <h3 class="title">{{ project.title }}</h3>
+                    <p class="description">{{ project.created_by }}</p>
+                    <p class="description">{{ project.description }}</p>
+                    <a class="details-btn" href="{% url 'content:project_detail' project.id %}">See More</a>
+                </div>
+            {% endfor %}
 
 
         </section>
+    </article>
+
+    <article>
+        {% if tutorials %}
+            <h1>
+                My Published Tutorials
+            </h1>
+        {% else %}
+            <h2>No published Tutorials yet...Come back later!</h2>
+        {% endif %}
+        {#        <section id="home">#}
+        {##}
+        {#          <img src="{% static 'images/cats.png' %}" alt="home" />#}
+        {#        </section>#}
+
+        <section id="dashboard">
+            {% for tutorial in tutorials %}
+                <div class="post">
+
+                    <img
+                            src="{{ tutorial.images }}"
+                            alt="{{ tutorial.title }} img"
+                    />
+
+                    <h3 class="title">{{ tutorial.title }}</h3>
+
+                    <p class="description">{{ tutorial.created_by }}</p>
+                    <p class="description">{{ tutorial.description }}</p>
+
+                    <a class="details-btn" href="{% url 'content:tutorial_detail' tutorial.id %}">See More</a>
+                </div>
+            {% endfor %}
+
+
+        </section>
+    </article>
 {% endblock %}
