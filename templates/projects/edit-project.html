@@ -1,17 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
     <section id="edit">
         <div class="form">
             <h2>Edit Post</h2>
-
-            <form class="edit-form" method="post" action="{% url 'content:project_edit' project.id %}">
+            <form class="edit-form" method="post" action="{% url 'content:project_edit' project.id %}" enctype="multipart/form-data">
                 {{ form }}
                 {% csrf_token %}
-
+{#                <input type="file" name="images" id="file" >#}
                 <button type="submit">Edit</button>
-                <input type="reset" value="Cancel" class="button-9" >
+{#                <input type="reset" value="Cancel" class="button-9" >#}
                 <a href="{% url 'content:project_detail' project.id %}" id="edit-btn" >Cancel</a>
             </form>
         </div>

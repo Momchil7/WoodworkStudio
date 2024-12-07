@@ -11,8 +11,12 @@
 <body>
 <div id="wrapper">
     <header>
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}</p>
+        {% else %}
+            <p>Welcome, Guest User</p>
+        {% endif %}
 
-        <p>Welcome {{ user.username }}</p>
 
         <a id="logo" href="{% url 'core:index' %}">
             <img id="logo-img" src="{% static '/images/logo.png' %}" alt="logo"/>
@@ -23,18 +27,16 @@
             {% if user.is_authenticated %}
                 <div class="user">
                     <a href="{% url 'core:dashboard' %}">My Dashboard</a>
-                    <a href="{% url 'core:profile' %}">My Profile</a>
+                    <a href="{% url 'core:view_profile' %}">My Profile</a>
                     <a href="{% url 'content:project_create' %}"> Create New Project</a>
                     <a href="{% url 'content:tutorial_create' %}">Create New Tutorial</a>
+                    <a href="{% url 'content:user_favorites' %}">Your Favourite Tutorials</a>
+
                     <form method="post" action="{% url 'core:logout' %}">
                         {% csrf_token %}
                         <button type="submit">Logout</button>
                     </form>
-                    {% if tutorial %}
-                        <a href="{% url 'content:tutorial_detail' tutorial.pk %}">My Tutorials</a>
 
-
-                    {% endif %}
                 </div>
             {% else %}
 

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Profile of {{ profile.username }}</h1>
+
+    <ul>
+        {% if profile.profile_picture %}
+            <img
+                    id="details-img"
+                    src="{{ profile.profile_picture.url }}"
+                    alt="{{ profile.title }}"
+            />
+        {% else %}
+            <p>No image available for this account.</p>
+        {% endif %}
+        <li><strong>Email:</strong> {{ profile.email }}</li>
+        <li><strong>First Name:</strong> {{ profile.first_name }}</li>
+        <li><strong>Last Name:</strong> {{ profile.last_name }}</li>
+        <li><strong>Date Joined:</strong> {{ profile.date_joined }}</li>
+        {% if user.is_authenticated %}
+            <li><strong>User favorites:</strong> <a href="{% url 'core:view_user_favorites' profile.username %}">View Favorites</a></li>
+        {% else %}
+            <li><strong>User favorites:</strong> <a href="{% url 'core:login' %}">Login or Register to view {{ profile.username }}'s favourites</a></li>
+        {% endif %}
+        <!-- Add any custom fields here -->
+    </ul>
+
+    {% if request.user == profile %}
+        <a href="{% url 'core:profile' %}">Edit Your Profile</a>
+    {% endif %}
+{% endblock %}

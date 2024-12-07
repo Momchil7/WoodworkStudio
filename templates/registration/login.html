@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
     <form method="post" action="{% url 'core:login' %}">
@@ -7,6 +7,7 @@
         {{ form.as_p }}
         <button class="btn btn-primary ml-2">Login</button>
         <p> Don't have an account? <a href="{% url 'core:register' %}">Register here!</a></p>
+        <p> Forgot Your Password? <a href="{% url 'core:password_reset' %}">Reset Your Password!</a></p>
     </form>
 
 {% endblock %}

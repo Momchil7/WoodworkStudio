@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<h2>{{ viewed_user.username }}'s Favourites</h2>
+
+<section id="favorites-list">
+    {% if favorites %}
+        <ul>
+            {% for favorite in favorites %}
+                <li>
+                    <h3>{{ favorite.tutorial.title }}</h3>
+                    <p>{{ favorite.tutorial.content|truncatewords:20 }}</p>
+                    <a href="{% url 'content:tutorial_detail' favorite.tutorial.id %}">View Tutorial</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>{{ viewed_user.username }} hasn't favorited any tutorials yet!</p>
+    {% endif %}
+</section>
+
+{% endblock %}

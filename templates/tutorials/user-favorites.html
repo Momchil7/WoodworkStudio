@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<h2>Your Favorites</h2>
+
+<section id="favorites-list">
+    {% if favorites %}
+        <ul>
+            {% for favorite in favorites %}
+                <li>
+                    <h3>{{ favorite.tutorial.title }}</h3>
+                    <p>{{ favorite.tutorial.content|truncatewords:20 }}</p>
+                    <a href="{% url 'content:tutorial_detail' favorite.tutorial.id %}">View Tutorial</a>
+                    <form method="post" action="{% url 'content:remove_favorite' favorite.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Remove from Favorites</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't favorited any tutorials yet!</p>
+    {% endif %}
+</section>
+
+{% endblock %}
+{##}
+{##}
+{##}
+{##}
+{#{% extends 'base.html' %}#}
+{#{% load static %}#}
+{#{% block content %}#}
+{##}
+{#<h2>Your Favorite Tutorials</h2>#}
+{##}
+{#<section id="favorites-list">#}
+{#    {% if favorites %}#}
+{#        <ul>#}
+{#            {% for favorite in favorites %}#}
+{#                <li id="favorite-{{ favorite.id }}">#}
+{#                    <h3>{{ favorite.tutorial.title }}</h3>#}
+{#                    <p>{{ favorite.tutorial.content|truncatewords:20 }}</p>#}
+{#                    <a href="{% url 'content:tutorial_detail' favorite.tutorial.id %}">View Tutorial</a>#}
+{#                    <button#}
+{#                        class="btn btn-danger remove-favorite-btn"#}
+{#                        data-id="{{ favorite.id }}"#}
+{#                    >#}
+{#                        Remove from Favorites#}
+{#                    </button>#}
+{#                </li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    {% else %}#}
+{#        <p>You haven't favorited any tutorials yet!</p>#}
+{#    {% endif %}#}
+{#</section>#}
+{##}
+{#<script>#}
+{#document.addEventListener('DOMContentLoaded', function () {#}
+{#    const removeButtons = document.querySelectorAll('.remove-favorite-btn');#}
+{##}
+{#    removeButtons.forEach(button => {#}
+{#        button.addEventListener('click', function (event) {#}
+{#            event.preventDefault();#}
+{##}
+{#            const favoriteId = button.dataset.id;#}
+{#            const csrfToken = '{{ csrf_token }}';#}
+{##}
+{#            fetch(`{% url 'content:remove_favorite' 0 %}`.replace('0', favoriteId), {#}
+{#                method: 'POST',#}
+{#                headers: {#}
+{#                    'X-CSRFToken': csrfToken,#}
+{#                    'Content-Type': 'application/json',#}
+{#                },#}
+{#            })#}
+{#            .then(response => response.json())#}
+{#            .then(data => {#}
+{#                if (data.success) {#}
+{#                    // Remove the favorite from the DOM#}
+{#                    const favoriteItem = document.getElementById(`favorite-${favoriteId}`);#}
+{#                    if (favoriteItem) {#}
+{#                        favoriteItem.remove();#}
+{#                    }#}
+{##}
+{#                    // If no favorites left, show a message#}
+{#                    const favoritesList = document.getElementById('favorites-list');#}
+{#                    if (!favoritesList.querySelector('li')) {#}
+{#                        favoritesList.innerHTML = "<p>You haven't favorited any tutorials yet!</p>";#}
+{#                    }#}
+{#                } else {#}
+{#                    alert('An error occurred. Please try again.');#}
+{#                }#}
+{#            })#}
+{#            .catch(error => console.error('Error:', error));#}
+{#        });#}
+{#    });});#}
+{#</script>#}
+
+{#{% endblock %}#}

@@ -2,17 +2,18 @@
 {% load static %}
 {% block content %}
 
-        <section id="create">
-          <div class="form">
+    <section id="create">
+        <div class="form">
             <h2>New Project</h2>
-
-            <form class="create-form" action="{% url 'content:project_create' %}" method="post">
-                {{ form }}
+            <form method="post" action="{% url 'content:project_create' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-
-              <button type="submit">Publish</button>
+                {{ form.as_p }}
+{#                <input type="file" name="images" id="file" >#}
+                <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
-          </div>
-        </section>
-    
+        </div>
+    </section>
+
 {% endblock %}
+
+{#                {% include 'projects/test_upload.html' %}#}

@@ -1,44 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    
 
-        {% if projects %}
 
-            <h1>
-                Gallery of Projects <br />View and enjoy!
-            </h1>
-        {% else %}
+    {% if projects %}
+
+        <h1>
+            Gallery of Projects <br/>View and enjoy!
+        </h1>
+    {% else %}
 
         <h2>No published Projects yet...Come back later!</h2>
-        {% endif %}
-        <section id="home">
+    {% endif %}
+    <section id="home">
 
-          <img src="{% static 'images/cats.png' %}" alt="home" />
-        </section>
+        <img src="{% static 'images/' %}" alt="home"/>
+    </section>
 
-        <section id="dashboard">
-
-
-            {% for project in projects %}
-
-          <div class="post">
-
-            <img
-              src="{{ project.images }}"
-              alt="{{ project.title }} img"
-            />
-
-            <h3 class="title">{{ project.title }}</h3>
-              <p class="description">{{ project.created_by }}</p>
-
-            <p class="description">{{ project.description }}</p>
-
-            <a class="details-btn" href="{% url 'content:project_detail' project.id %}">See More</a>
-          </div>
+    <section id="dashboard">
+        {% for project in projects %}
+            <div class="post">
+                {% if project.images %}
+                    <img
+                            id="details-img"
+                            src="{{ project.images.url }}"
+                            alt="{{ project.title }}"
+                    />
+                {% else %}
+                    <p>No image available for this project.</p>
+                {% endif %}
+                <h3 class="title">{{ project.title }}</h3>
+                <p class="description">{{ project.created_by }}</p>
+                <p class="description">{{ project.description }}</p>
+                <a class="details-btn" href="{% url 'content:project_detail' project.id %}">See More</a>
+            </div>
         {% endfor %}
 
 
-        </section>
-    
+    </section>
+
 {% endblock %}

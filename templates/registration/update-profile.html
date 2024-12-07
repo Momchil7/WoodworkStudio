@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
+
     <h2>Update Profile</h2>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+{#        <input type="file" name="profile_picture" id="file" >#}
         <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
     <a href="{% url 'core:dashboard' %}">Cancel</a>
+
 {% endblock %}

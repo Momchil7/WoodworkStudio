@@ -20,9 +20,24 @@
                     <p>Content: {{ tutorial.content }}</p>
                     <p>Difficulty level: {{ tutorial.skill_level }}</p>
                     <p>Video : {{ tutorial.video_link }}</p>
-                    <p>Project author: {{ tutorial.created_by }}</p>
+                    <p><a href="{% url 'core:view_profile_by_username' tutorial.created_by.username %}">
+                        {{ tutorial.created_by.get_full_name|default:tutorial.created_by.username }}</a></p>
                     <p>Project category: {{ tutorial.category }}</p>
                 </div>
+
+                {% if tutorial.id in user_favorites %}
+                    <!-- Show remove favorite button -->
+                    <form method="post" action="{% url 'content:remove_favorite' tutorial.favorite_id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Remove Favorite</button>
+                    </form>
+                {% else %}
+                    <!-- Show add favorite button -->
+                    <form method="post" action="{% url 'content:add_favorite' tutorial.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Add to Favorites</button>
+                    </form>
+                {% endif %}
 
 
                 {% if user.is_authenticated and user == tutorial.created_by %}
@@ -36,3 +51,221 @@
     </section>
 
 {% endblock %}
+
+{#{% extends 'base.html' %}#}
+{#{% load static %}#}
+{#{% block content %}#}
+{##}
+{#<section id="details">#}
+{#    <div id="details-wrapper">#}
+{#        <h2>Tutorial Details</h2>#}
+{##}
+{#        <img#}
+{#            id="details-img"#}
+{#            src="{{ tutorial.images }}"#}
+{#            alt="{{ tutorial.title }}"#}
+{#        />#}
+{##}
+{#        <p id="details-title">{{ tutorial.title }}</p>#}
+{#        <div id="info-wrapper">#}
+{#            <div id="details-description">#}
+{#                <p>Content: {{ tutorial.content }}</p>#}
+{#                <p>Difficulty level: {{ tutorial.skill_level }}</p>#}
+{#                <p>Video: {{ tutorial.video_link }}</p>#}
+{#                <p> Username:#}
+{#                    <a href="{% url 'core:view_profile_by_username' tutorial.created_by.username %}">#}
+{#                        {{ tutorial.created_by.username }}#}
+{#                        tutorial.created_by.get_full_name|default:#}
+{#                    </a>#}
+{#                </p>#}
+{#                <p>Project category: {{ tutorial.category }}</p>#}
+{#            </div>#}
+{##}
+{#            <div id="favorite-button">#}
+{#                {% if tutorial.id in user_favorites %}#}
+{#                    <button#}
+{#                        data-action="remove"#}
+{#                        data-id="{{ tutorial.favorite_id }}"#}
+{#                        class="favorite-btn btn btn-danger">#}
+{#                        Remove Favorite#}
+{#                    </button>#}
+{#                {% else %}#}
+{#                    <button#}
+{#                        data-action="add"#}
+{#                        data-id="{{ tutorial.id }}"#}
+{#                        class="favorite-btn btn btn-primary">#}
+{#                        Add to Favorites#}
+{#                    </button>#}
+{#                {% endif %}#}
+{##}
+{##}
+{##}
+{##}
+{##}
+{#            {% if user.is_authenticated and user == tutorial.created_by %}#}
+{#                <div id="action-buttons">#}
+{#                    <a href="{% url 'content:tutorial_edit' tutorial.id %}" id="edit-btn">Edit</a>#}
+{#                    <a href="{% url 'content:tutorial_delete' tutorial.id %}" id="delete-btn">Delete</a>#}
+{#                </div>#}
+{#            {% endif %}#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<script>#}
+   {#document.addEventListener('DOMContentLoaded', function () {#}
+   {# const favoriteButtons = document.querySelectorAll('.favorite-btn');#}
+   {##}
+   {# favoriteButtons.forEach(button => {#}
+   {#     button.addEventListener('click', function (event) {#}
+   {#         event.preventDefault();#}
+   {##}
+   {#         const action = button.dataset.action;#}
+   {#         const id = button.dataset.id;#}
+   {#         const csrfToken = '{{ csrf_token }}';#}
+   {##}
+   {#         // Determine URL for AJAX request#}
+   {#         const url = action === 'add'#}
+   {#             ? `{% url 'content:add_favorite' 0 %}`.replace('0', id)#}
+   {#             : `{% url 'content:remove_favorite' 0 %}`.replace('0', id);#}
+   {##}
+   {#         // Send AJAX request#}
+   {#         fetch(url, {#}
+   {#             method: 'POST',#}
+   {#             headers: {#}
+   {#                 'X-CSRFToken': csrfToken,#}
+   {#                 'Content-Type': 'application/json',#}
+   {#             },#}
+   {#         })#}
+   {#         .then(response => response.json())#}
+   {#         .then(data => {#}
+   {#             if (data.success) {#}
+   {#                 // Update UI#}
+   {#                 if (action === 'add') {#}
+   {#                     button.dataset.action = 'remove';#}
+   {#                     button.dataset.id = data.favorite_id; // Update to the new favorite ID#}
+   {#                     button.textContent = 'Remove Favorite';#}
+   {#                     button.classList.remove('btn-primary');#}
+   {#                     button.classList.add('btn-danger');#}
+   {#                 } else {#}
+   {#                     button.dataset.action = 'add';#}
+   {#                     button.dataset.id = data.tutorial_id; // Reset to the tutorial ID#}
+   {#                     button.textContent = 'Add to Favorites';#}
+   {#                     button.classList.remove('btn-danger');#}
+   {#                     button.classList.add('btn-primary');#}
+   {#                 }#}
+   {#             } else {#}
+   {#                 alert('An error occurred. Please try again.');#}
+   {#             }#}
+   {#         })#}
+   {#         .catch(error => console.error('Error:', error));#}
+   {#     });#}
+   {# });});#}
+
+   {#document.addEventListener('DOMContentLoaded', function () {#}
+   {# const favoriteButtons = document.querySelectorAll('.favorite-btn');#}
+   {##}
+   {# favoriteButtons.forEach(button => {#}
+   {#     button.addEventListener('click', function (event) {#}
+   {#         event.preventDefault();#}
+   {##}
+   {#         const action = button.dataset.action;#}
+   {#         const id = button.dataset.id;#}
+   {#         const csrfToken = '{{ csrf_token }}';#}
+   {##}
+   {#         const url = action === 'add'#}
+   {#             ? `{% url 'content:add_favorite' 0 %}`.replace('0', id)#}
+   {#             : `{% url 'content:remove_favorite' 0 %}`.replace('0', id);#}
+   {##}
+   {#         fetch(url, {#}
+   {#             method: 'POST',#}
+   {#             headers: {#}
+   {#                 'X-CSRFToken': csrfToken,#}
+   {#                 'Content-Type': 'application/json',#}
+   {#             },#}
+   {#         })#}
+   {#         .then(response => response.json())#}
+   {#         .then(data => {#}
+   {#             if (data.success) {#}
+   {#                 if (action === 'add') {#}
+   {#                     // Change button to show "Remove Favorite"#}
+   {#                     button.dataset.action = 'remove';#}
+   {#                     button.dataset.id = data.favorite_id;#}
+   {#                     button.textContent = 'Remove Favorite';#}
+   {#                     button.classList.remove('btn-primary');#}
+   {#                     button.classList.add('btn-danger');#}
+   {#                 } else {#}
+   {#                     // Change button to show "Add to Favorites"#}
+   {#                     button.dataset.action = 'add';#}
+   {#                     button.dataset.id = data.tutorial_id;#}
+   {#                     button.textContent = 'Add to Favorites';#}
+   {#                     button.classList.remove('btn-danger');#}
+   {#                     button.classList.add('btn-primary');#}
+   {#                 }#}
+   {#             } else {#}
+   {#                 alert('An error occurred. Please try again.');#}
+   {#             }#}
+   {#         })#}
+   {#         .catch(error => console.error('Error:', error));#}
+   {#     });#}
+   {# });});#}
+
+{##}
+{#document.addEventListener('DOMContentLoaded', function () {#}
+{#    const favoriteButtons = document.querySelectorAll('.favorite-btn');#}
+{##}
+{#    favoriteButtons.forEach(button => {#}
+{#        button.addEventListener('click', function (event) {#}
+{#            event.preventDefault();#}
+{##}
+{#            const action = button.dataset.action;#}
+{#            const id = button.dataset.id;#}
+{#            const csrfToken = '{{ csrf_token }}';#}
+{##}
+{#            // Validate `id`#}
+{#            if (!id) {#}
+{#                console.error('Missing tutorial ID.');#}
+{#                return;#}
+{#            }#}
+{##}
+{#            // Build URLs dynamically#}
+{#            const addFavoriteURL = '{% url "content:add_favorite" 0 %}'.replace('0', id);#}
+{#            const removeFavoriteURL = '{% url "content:remove_favorite" 0 %}'.replace('0', id);#}
+{##}
+{#            const url = action === 'add' ? addFavoriteURL : removeFavoriteURL;#}
+{##}
+{#            fetch(url, {#}
+{#                method: 'POST',#}
+{#                headers: {#}
+{#                    'X-CSRFToken': csrfToken,#}
+{#                    'Content-Type': 'application/json',#}
+{#                },#}
+{#            })#}
+{#            .then(response => response.json())#}
+{#            .then(data => {#}
+{#                if (data.success) {#}
+{#                    if (action === 'add') {#}
+{#                        button.dataset.action = 'remove';#}
+{#                        button.dataset.id = data.favorite_id;#}
+{#                        button.textContent = 'Remove Favorite';#}
+{#                        button.classList.remove('btn-primary');#}
+{#                        button.classList.add('btn-danger');#}
+{#                    } else {#}
+{#                        button.dataset.action = 'add';#}
+{#                        button.dataset.id = data.tutorial_id;#}
+{#                        button.textContent = 'Add to Favorites';#}
+{#                        button.classList.remove('btn-danger');#}
+{#                        button.classList.add('btn-primary');#}
+{#                    }#}
+{#                } else {#}
+{#                    alert('An error occurred. Please try again.');#}
+{#                }#}
+{#            })#}
+{#            .catch(error => console.error('Error:', error));#}
+{#        });#}
+{#    });});#}
+{#</script>#}
+
+
+
+{#{% endblock %}#}

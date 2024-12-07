@@ -5,10 +5,8 @@
     <article>
 
         {% if projects %}
-
             <h2>My Published Projects</h2>
         {% else %}
-
             <h2>No published Projects yet...Come back later!</h2>
         {% endif %}
 
@@ -17,19 +15,25 @@
             {% for project in projects %}
 
                 <div class="post">
-
-                    <img
-                            src="{{ project.images }}"
-                            alt="{{ project.title }} img"
-                    />
-
+                    {#                    <img#}
+                    {#                            src="{{ project.images }}"#}
+                    {#                            alt="{{ project.title }} img"#}
+                    {#                    />#}
+                    {% if project.images %}
+                        <img
+                                id="details-img"
+                                src="{{ project.images.url }}"
+                                alt="{{ project.title }}"
+                        />
+                    {% else %}
+                        <p>No image available for this project.</p>
+                    {% endif %}
                     <h3 class="title">{{ project.title }}</h3>
                     <p class="description">{{ project.created_by }}</p>
                     <p class="description">{{ project.description }}</p>
                     <a class="details-btn" href="{% url 'content:project_detail' project.id %}">See More</a>
                 </div>
             {% endfor %}
-
 
         </section>
     </article>
@@ -42,19 +46,15 @@
         {% else %}
             <h2>No published Tutorials yet...Come back later!</h2>
         {% endif %}
-        {#        <section id="home">#}
-        {##}
-        {#          <img src="{% static 'images/cats.png' %}" alt="home" />#}
-        {#        </section>#}
 
         <section id="dashboard">
             {% for tutorial in tutorials %}
                 <div class="post">
 
-                    <img
-                            src="{{ tutorial.images }}"
-                            alt="{{ tutorial.title }} img"
-                    />
+                    {#                    <img#}
+                    {#                            src="{{ tutorial.images }}"#}
+                    {#                            alt="{{ tutorial.title }} img"#}
+                    {#                    />#}
 
                     <h3 class="title">{{ tutorial.title }}</h3>
 
@@ -64,7 +64,6 @@
                     <a class="details-btn" href="{% url 'content:tutorial_detail' tutorial.id %}">See More</a>
                 </div>
             {% endfor %}
-
 
         </section>
     </article>
