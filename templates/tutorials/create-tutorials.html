@@ -2,17 +2,38 @@
 {% load static %}
 {% block content %}
 
-    <section id="register">
-        <div class="form">
-            <h2>Create Tutorial</h2>
-
-            <form class="register-form" method="post" action="{% url 'content:tutorial_create' %}">
-                {{ form }}
-                {% csrf_token %}
-
-
-                <button type="submit">Create</button>
-            </form>
+{#    <section id="create">#}
+{#        <div class="form">#}
+{#            <h2>Create Tutorial</h2>#}
+{#            <form class="register-form" method="post" action="{% url 'content:tutorial_create' %}">#}
+{#                {{ form }}#}
+{#                {% csrf_token %}#}
+{#                <button type="submit" class="btn btn-primary">Create Tutorial</button>#}
+{#                <a href="{% url 'core:dashboard' %}" class="btn btn-primary">Cancel</a>#}
+{#            </form>#}
+{#        </div>#}
+{#    </section>#}
+        <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h2 class="mb-0">Create a New Tutorial</h2>
+                    </div>
+                    <div class="card-body">
+                        <form class="register-form" method="post" action="{% url 'content:tutorial_create' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                {{ form.as_p }}
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-sm me-2">Create Tutorial</button>
+                                <a href="{% url 'core:dashboard' %}" class="btn btn-secondary btn-sm">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
 {% endblock %}

@@ -3,47 +3,99 @@
 {% block content %}
 
 
-    <section id="details">
-        <div id="details-wrapper">
-            <h2>Project Details</h2>
-
-
-            {#            <img#}
-            {#                    id="details-img"#}
-            {#                    src="{{ project.images.url }}"#}
-            {#                    alt="{{ project.title }}"#}
-            {#            />#}
-            {% if project.images %}
-                <img
-                        id="details-img"
-                        src="{{ project.images.url }}"
-                        alt="{{ project.title }}"
-                />
-            {% else %}
-                <p>No image available for this project.</p>
-            {% endif %}
-            <p id="details-title">{{ project.title }}</p>
-            <div id="info-wrapper">
-                <div id="details-description">
-
-                    <p>Description: {{ project.description }}</p>
-                    <p> Difficulty level: {{ project.difficulty }}</p>
-                    <p>What materials were used: {{ project.materials_used }}</p>
-                    <p>Username:<a href="{% url 'core:view_profile_by_username' project.created_by.username %}">
-                        {{ project.created_by.username }}</a></p>
-{#                    project.created_by.get_full_name|default:#}
-                    <p>Project category: {{ project.category }}</p>
+{#    <section id="details">#}
+{#        <div id="details-wrapper">#}
+{#            <h2>Project Details</h2>#}
+{#            {% if project.images %}#}
+{#                <img#}
+{#                        id="details-img"#}
+{#                        src="{{ project.images.url }}"#}
+{#                        alt="{{ project.title }}"#}
+{#                />#}
+{#            {% else %}#}
+{#                <p>No image available for this project.</p>#}
+{#            {% endif %}#}
+{#            <p id="details-title">{{ project.title }}</p>#}
+{#            <div id="info-wrapper">#}
+{#                <div id="details-description">#}
+{##}
+{#                    <p>Description: {{ project.description }}</p>#}
+{#                    <p> Difficulty level: {{ project.difficulty }}</p>#}
+{#                    <p>What materials were used: {{ project.materials_used }}</p>#}
+{#                    <p>Username:<a href="{% url 'core:view_profile_by_username' project.created_by.username %}">#}
+{#                        {{ project.created_by.username }}</a></p>#}
+{#                    <p>Project category: {{ project.category }}</p>#}
+{#                </div>#}
+{##}
+{##}
+{#                {% if user.is_authenticated and user == project.created_by %}#}
+{#                    <div id="action-buttons">#}
+{#                        <a href="{% url 'content:project_edit' project.id %}" id="edit-btn">Edit</a>#}
+{#                        <a href="{% url 'content:project_delete' project.id %}" id="delete-btn">Delete</a>#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+<section class="container my-5">
+    <div class="card shadow-lg">
+        <div class="card-header text-center">
+            <h2 class="mb-0">Project Details</h2>
+        </div>
+        <div class="card-body">
+{#            <h2 class="card-title text-primary-emphasis">Project Details</h2>#}
+            <div class="row">
+                <!-- Project Image Section -->
+                <div class="col-md-6">
+                    {% if project.images %}
+                        <img
+                            src="{{ project.images.url }}"
+                            class="img-fluid rounded"
+                            alt="{{ project.title }}"
+                        />
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center rounded"
+                             style="height: 300px; color: #888;">
+                            No image available
+                        </div>
+                    {% endif %}
                 </div>
 
-
-                {% if user.is_authenticated and user == project.created_by %}
-                    <div id="action-buttons">
-                        <a href="{% url 'content:project_edit' project.id %}" id="edit-btn">Edit</a>
-                        <a href="{% url 'content:project_delete' project.id %}" id="delete-btn">Delete</a>
-                    </div>
-                {% endif %}
+                <!-- Project Details Section -->
+                <div class="col-md-6">
+                    <h3 class="text">Project Title: {{ project.title }}</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Description:</strong> {{ project.description }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Difficulty Level:</strong> {{ project.difficulty }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Materials Used:</strong> {{ project.materials_used }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>User's profile:</strong>
+                            <a href="{% url 'core:view_profile_by_username' project.created_by.username %}">
+                                {{ project.created_by.username }}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Category:</strong> {{ project.category }}
+                        </li>
+                    </ul>
+                </div>
             </div>
+
+            <!-- Action Buttons -->
+            {% if user.is_authenticated and user == project.created_by %}
+                <div class="card-footer text-center">
+                    <a href="{% url 'content:project_edit' project.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'content:project_delete' project.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            {% endif %}
         </div>
-    </section>
+    </div>
+</section>
 
 {% endblock %}

@@ -1,55 +1,22 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
-
-
-<h2>Your Favorites</h2>
-
-<section id="favorites-list">
-    {% if favorites %}
-        <ul>
-            {% for favorite in favorites %}
-                <li>
-                    <h3>{{ favorite.tutorial.title }}</h3>
-                    <p>{{ favorite.tutorial.content|truncatewords:20 }}</p>
-                    <a href="{% url 'content:tutorial_detail' favorite.tutorial.id %}">View Tutorial</a>
-                    <form method="post" action="{% url 'content:remove_favorite' favorite.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Remove from Favorites</button>
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>You haven't favorited any tutorials yet!</p>
-    {% endif %}
-</section>
-
-{% endblock %}
-{##}
-{##}
-{##}
-{##}
 {#{% extends 'base.html' %}#}
 {#{% load static %}#}
 {#{% block content %}#}
 {##}
-{#<h2>Your Favorite Tutorials</h2>#}
+{##}
+{#<h2>Your Favorites</h2>#}
 {##}
 {#<section id="favorites-list">#}
 {#    {% if favorites %}#}
 {#        <ul>#}
 {#            {% for favorite in favorites %}#}
-{#                <li id="favorite-{{ favorite.id }}">#}
+{#                <li>#}
 {#                    <h3>{{ favorite.tutorial.title }}</h3>#}
 {#                    <p>{{ favorite.tutorial.content|truncatewords:20 }}</p>#}
 {#                    <a href="{% url 'content:tutorial_detail' favorite.tutorial.id %}">View Tutorial</a>#}
-{#                    <button#}
-{#                        class="btn btn-danger remove-favorite-btn"#}
-{#                        data-id="{{ favorite.id }}"#}
-{#                    >#}
-{#                        Remove from Favorites#}
-{#                    </button>#}
+{#                    <form method="post" action="{% url 'content:remove_favorite' favorite.id %}">#}
+{#                        {% csrf_token %}#}
+{#                        <button type="submit" class="btn btn-danger">Remove from Favorites</button>#}
+{#                    </form>#}
 {#                </li>#}
 {#            {% endfor %}#}
 {#        </ul>#}
@@ -58,6 +25,155 @@
 {#    {% endif %}#}
 {#</section>#}
 {##}
+{#{% endblock %}#}
+{##}
+{##}
+{##}
+{##}
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{#<h2>Your Favorite Tutorials</h2>#}
+{##}
+{#<section id="favorites-list">#}
+{#    {% if favorites %}#}
+{#        <div>#}
+{#            {% for favorite in favorites %}#}
+{#                <div id="favorite-{{ favorite.id }}">#}
+{#                    <h3 class="card-title">Title: {{ favorite.tutorial.title }}</h3>#}
+{#                    <p class="card-text">Description: {{ favorite.tutorial.content }}</p>#}
+{#                    <p class="card-text">Video link: <a href="{{ favorite.tutorial.video_link }}">Link to video</a></p>#}
+{#                    <p class="card-text">Author: {{ favorite.tutorial.created_by }}</p>#}
+{#                    <p class="card-text">Published: {{ favorite.tutorial.created_at }}</p>#}
+{#                    <a href="{% url 'content:tutorial_detail' favorite.tutorial.id %}" class="btn btn-primary">View Tutorial</a>#}
+{#                    <button#}
+{#                        class="btn btn-danger remove-favorite-btn"#}
+{#                        data-id="{{ favorite.id }}"#}
+{#                    >#}
+{#                        Remove from Favorites#}
+{#                    </button>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    {% else %}#}
+{#        <p>You haven't favorited any tutorials yet!</p>#}
+{#    {% endif %}#}
+{#</section>#}
+
+{#    <h2 class="text-center mb-4">Your Favorite Tutorials</h2>#}
+{##}
+{#<section id="favorites-list">#}
+{#    {% if favorites %}#}
+{#        <div class="container">#}
+{#            <div class="row row-cols-1 row-cols-md-3 g-4"> <!-- Responsive grid with 2 columns on medium screens -->#}
+{#                {% for favorite in favorites %}#}
+{#                    <div class="col">#}
+{#                        <div class="card h-100 shadow-lg">#}
+{#                            {% if favorite.tutorial.images %}#}
+{#                                <img#}
+{#                                    src="{{ favorite.tutorial.images.url }}"#}
+{#                                    class="card-img-top"#}
+{#                                    alt="{{ favorite.tutorial.title }}"#}
+{#                                />#}
+{#                            {% endif %}#}
+{#                            <div class="card-body">#}
+{#                                <h5 class="card-title">{{ favorite.tutorial.title }}</h5>#}
+{#                                <p class="card-text">Description: {{ favorite.tutorial.content }}</p>#}
+{#                                <p class="card-text">Video link: <a href="{{ favorite.tutorial.video_link }}">Watch Video</a></p>#}
+{#                                <p class="card-text">Author: <strong>{{ favorite.tutorial.created_by }}</strong></p>#}
+{#                                <p class="card-text text-muted">Published: {{ favorite.tutorial.created_at }}</p>#}
+{#                            </div>#}
+{#                            <div class="card-footer text-center">#}
+{#                                <a href="{% url 'content:tutorial_detail' favorite.tutorial.id %}" class="btn btn-primary btn-sm">View Tutorial</a>#}
+{#                                <button class="btn btn-danger btn-sm" data-id="{{ favorite.id }}">Remove from Favorites</button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        </div>#}
+{#    {% else %}#}
+{#        <div class="text-center mt-4">#}
+{#            <p>You haven't favorited any tutorials yet!</p>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#</section>#}
+{#<h2 class="text-center mb-5 pt-5">Your Favorite Tutorials</h2>#}
+{#    <section id="favorites-list">#}
+{#    {% if favorites %}#}
+{#        <div class="container">#}
+{#            <div class="row row-cols-1 row-cols-md-3 g-4">#}
+{#                {% for favorite in favorites %}#}
+{#                    <div class="col">#}
+{#                        <div class="card h-100 shadow-lg" id="favorite-{{ favorite.id }}">#}
+{#                            <div class="card-body">#}
+{#                                <h5 class="card-title">Tutorial Title: {{ favorite.tutorial.title }}</h5>#}
+{#                                <p class="card-text">Description: {{ favorite.tutorial.content }}</p>#}
+{#                                <p class="card-text">Video link: <a href="{{ favorite.tutorial.video_link }}">Click here to go to the video</a></p>#}
+{#                                <p class="card-text">Author: <strong>{{ favorite.tutorial.created_by }}</strong></p>#}
+{#                                <p class="card-text text-muted">Published: {{ favorite.tutorial.created_at }}</p>#}
+{#                            </div>#}
+{#                            <div class="card-footer text-center">#}
+{#                                <a href="{% url 'content:tutorial_detail' favorite.tutorial.id %}" class="btn btn-primary btn-sm ">View Tutorial</a>#}
+{#                                <button class="btn btn-danger btn-sm remove-favorite-btn" data-id="{{ favorite.id }}">Remove from Favorites</button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        </div>#}
+{#    {% else %}#}
+{#        <div class="text-center mt-4">#}
+{#            <p>You haven't favorited any tutorials yet!</p>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#</section>#}
+    
+    <div class="container my-5">
+    <!-- Main Card with Header -->
+    <div class="card shadow-lg">
+        <div class="card-header text-center">
+            <h4>My Favorite Tutorials</h4>
+        </div>
+        <div class="card-body">
+            {% if favorites %}
+                <div class="row row-cols-1 row-cols-md-3 g-4"> <!-- Responsive grid with 3 columns on medium screens -->
+                    {% for favorite in favorites %}
+                        <div class="col">
+                            <div class="card h-100 shadow-lg" id="favorite-{{ favorite.id }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">Tutorial Title: {{ favorite.tutorial.title }}</h5>
+                                    <p class="card-text">Description: {{ favorite.tutorial.content }}</p>
+                                    <p class="card-text">Video link:                                         
+                                        {% if tutorial.video_link %}
+                                            <a href="{{ tutorial.video_link }}">Click here to go to the video</a>
+                                        {% else %}
+                                            No link provided
+                                        {% endif %}
+                                    </p>
+                                    <p class="card-text">Author: <strong>{{ favorite.tutorial.created_by }}</strong></p>
+                                    <p class="card-text text-muted">Published: {{ favorite.tutorial.created_at }}</p>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <a href="{% url 'content:tutorial_detail' favorite.tutorial.id %}" class="btn btn-primary btn-sm">View Tutorial</a>
+                                    <button class="btn btn-danger btn-sm remove-favorite-btn" data-id="{{ favorite.id }}">Remove from Favorites</button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center mt-4">
+                    <p>You haven't favorited any tutorials yet!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
 {#<script>#}
 {#document.addEventListener('DOMContentLoaded', function () {#}
 {#    const removeButtons = document.querySelectorAll('.remove-favorite-btn');#}
@@ -98,5 +214,46 @@
 {#        });#}
 {#    });});#}
 {#</script>#}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const removeButtons = document.querySelectorAll('.remove-favorite-btn');
 
-{#{% endblock %}#}
+    removeButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const favoriteId = button.dataset.id;
+            const csrfToken = '{{ csrf_token }}';
+
+            fetch(`{% url 'content:remove_favorite' 0 %}`.replace('0', favoriteId), {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Remove the favorite from the DOM
+                    const favoriteItem = document.getElementById(`favorite-${favoriteId}`);
+                    if (favoriteItem) {
+                        favoriteItem.remove();
+                    }
+
+                    // If no favorites left, show a message
+                    const favoritesList = document.getElementById('favorites-list');
+                    if (!favoritesList.querySelector('.remove-favorite-btn')) {
+                        favoritesList.innerHTML = "<p >Nothing left to show here! Add tutorials to Favorites to veiw them here</p>";
+                    }
+                } else {
+                    alert('An error occurred. Please try again.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+});
+</script>
+
+{% endblock %}

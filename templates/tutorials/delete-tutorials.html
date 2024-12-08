@@ -2,22 +2,40 @@
 {% load static %}
 {% block content %}
 
-    <section id="edit">
-        <div class="form">
-            <h1>You are about to delete your Tutorial</h1>
-
-
-            <form id="delete" class="register-form" method="post"
-                  action="{% url 'content:tutorial_delete' tutorial.id %}">
-
+{#    <section id="edit">#}
+{#        <div class="form">#}
+{#            <h1>You are about to delete your Tutorial</h1>#}
+{##}
+{##}
+{#            <form id="delete" class="register-form" method="post"#}
+{#                  action="{% url 'content:tutorial_delete' tutorial.id %}">#}
+{##}
+{#                {{ form }}#}
+{#                {% csrf_token %}#}
+{##}
+{#                <button type="submit">Confirm</button>#}
+{#                <a href="{% url 'content:tutorial_detail' tutorial.id %}" id="edit-btn">Cancel</a>#}
+{#            </form>#}
+{#        </div>#}
+{##}
+{#    </section>#}
+<div class="container py-5">
+    <div class="card shadow-lg text-center">
+        <div class="card-header bg-danger text-white">
+            <h2 class="mb-0">Delete Tutorial</h2>
+        </div>
+        <div class="card-body">
+            <p class="fs-5 text-muted">Are you sure you want to delete the tutorial: <strong>{{ tutorial.title }}</strong>? This action cannot be undone.</p>
+            <form method="post" action="{% url 'content:tutorial_delete' tutorial.id %}" class="text-center">
                 {{ form }}
                 {% csrf_token %}
-
-                <button type="submit">Confirm</button>
-                <a href="{% url 'content:tutorial_detail' tutorial.id %}" id="edit-btn">Cancel</a>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-danger me-2">Confirm Delete</button>
+                    <a href="{% url 'content:tutorial_detail' tutorial.id %}" class="btn btn-secondary">Cancel</a>
+                </div>
             </form>
         </div>
-
-    </section>
+    </div>
+</div>
 
 {% endblock %}

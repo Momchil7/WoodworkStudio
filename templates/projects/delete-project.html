@@ -2,20 +2,44 @@
 {% load static %}
 {% block content %}
 
-    <section id="edit">
-        <div class="form">
-            <h2>Delete Post</h2>
-
-            <form class="edit-form" method="post" action="{% url 'content:project_delete' project.id %}">
+{#    <section id="edit">#}
+{#        <div class="form">#}
+{#            <h2>Delete Project</h2>#}
+{##}
+{#            <form class="edit-form" method="post" action="{% url 'content:project_delete' project.id %}">#}
+{#                {{ form }}#}
+{#                {% csrf_token %}#}
+{##}
+{##}
+{#                <button type="submit">Delete</button>#}
+{#                <input type="reset" value="Cancel" class="button-9" >#}
+{#                <a href="{% url 'content:project_detail' project.id %}" id="edit-btn" >Cancel</a>#}
+{#            </form>#}
+{#        </div>#}
+{#    </section>#}
+    
+<section class="container py-5">
+    <div class="card shadow-lg text-center">
+        <div class="card-header bg-danger text-white">
+            <h2 class="mb-0">Delete Project</h2>
+        </div>
+        <div class="card-body">
+            <p class="fs-5 text-muted">Are you sure you want to delete the project: <strong>{{ project.title }}</strong>? This action cannot be undone.</p>
+            <form method="post" action="{% url 'content:project_delete' project.id %}" class="text-center">
                 {{ form }}
                 {% csrf_token %}
-
-
-                <button type="submit">Delete</button>
-                <input type="reset" value="Cancel" class="button-9" >
-                <a href="{% url 'content:project_detail' project.id %}" id="edit-btn" >Cancel</a>
+                <button type="submit" class="btn btn-danger me-2">Confirm Delete</button>
+                <a href="{% url 'content:project_detail' project.id %}" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
-    </section>
+    </div>
+</section>
+
 
 {% endblock %}
+
+
+
+
+
+
