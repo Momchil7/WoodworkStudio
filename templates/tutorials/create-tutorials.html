@@ -2,17 +2,7 @@
 {% load static %}
 {% block content %}
 
-{#    <section id="create">#}
-{#        <div class="form">#}
-{#            <h2>Create Tutorial</h2>#}
-{#            <form class="register-form" method="post" action="{% url 'content:tutorial_create' %}">#}
-{#                {{ form }}#}
-{#                {% csrf_token %}#}
-{#                <button type="submit" class="btn btn-primary">Create Tutorial</button>#}
-{#                <a href="{% url 'core:dashboard' %}" class="btn btn-primary">Cancel</a>#}
-{#            </form>#}
-{#        </div>#}
-{#    </section>#}
+
         <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -26,7 +16,7 @@
                             <div class="mb-3">
                                 {{ form.as_p }}
                             </div>
-                            <div class="text-center">
+                            <div class="text-center card-footer">
                                 <button type="submit" class="btn btn-primary btn-sm me-2">Create Tutorial</button>
                                 <a href="{% url 'core:dashboard' %}" class="btn btn-secondary btn-sm">Cancel</a>
                             </div>

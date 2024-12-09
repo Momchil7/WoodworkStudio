@@ -1,13 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-{#    <h2>Register Profile</h2>#}
-{#    <form method="post" enctype="multipart/form-data">#}
-{#        {% csrf_token %}#}
-{#        {{ form }}#}
-{#        <input type="file" name="profile_picture" id="file" >#}
-{#        <button class="btn btn-primary ml-2">Register</button>#}
-{#    </form>#}
+
     
     <div class="container my-5">
     <div class="row justify-content-center">
@@ -23,9 +17,12 @@
                             {{ form.non_field_errors }}
                             {{ form.as_p }}
                         </div>
-                        <div class="text-center mt-3">
-                            <button type="submit" class="btn btn-primary btn-sm me-2">Register</button>
-                            <a href="{% url 'core:login' %}" class="btn btn-secondary btn-sm">Login</a>
+                        <div class=" card-footer text-center mt-3">
+                            <button type="submit" class="btn btn-primary btn-sm ">Register</button>
+                            <br>
+                            Or 
+                            <br>
+                            <a href="{% url 'core:login' %}" class="btn btn-secondary btn-sm">Go back to Login</a>
                         </div>
                     </form>
                 </div>

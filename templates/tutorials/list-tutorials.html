@@ -3,30 +3,7 @@
 {% block content %}
 
 
-{##}
-{#    {% if tutorials %}#}
-{#        <h1>#}
-{#            Gallery of Tutorials <br/>View and enjoy!#}
-{#        </h1>#}
-{#    {% else %}#}
-{#        <h2>No published Tutorials yet...Come back later!</h2>#}
-{#    {% endif %}#}
-{##}
-{#    <section id="dashboard">#}
-{##}
-{#        {% for tutorial in tutorials %}#}
-{#            <div class="post">#}
-{#                <h3 class="title">Title: {{ tutorial.title }}</h3>#}
-{#                <p class="description">Content: {{ tutorial.description }}</p>#}
-{#                <p class="card-text">Author: <strong>{{ tutorial.created_by }}</strong></p>#}
-{#                <p class="card-text"><small class="text-muted">Published: {{ tutorial.created_at }}</small></p>#}
-{#                </div>#}
-{#                <div class="card-footer text-center">#}
-{#                    <a href="{% url 'content:tutorial_detail' tutorial.id %}" class="btn btn-primary btn-sm">See More</a>#}
-{#                </div>#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    </section>#}
+
 <div class="container py-5">
     {% if tutorials %}
         <h1 class="text-center mb-4">
@@ -40,28 +17,18 @@
         {% for tutorial in tutorials %}
         <div class="col-md-4">
             <div class="card h-100 shadow-lg">
-{#                <!-- Placeholder image if no images exist -->#}
-{#                {% if tutorial.image %}#}
-{#                    <img#}
-{#                        src="{{ tutorial.image.url }}"#}
-{#                        class="card-img-top"#}
-{#                        alt="{{ tutorial.title }}"#}
-{#                    />#}
-{#                {% else %}#}
-{#                    <p class="text-center text-muted p-3">No image available for this tutorial.</p>#}
-{#                {% endif %}#}
-
                 <div class="card-body">
-                    <h5 class="card-title">Title: {{ tutorial.title }}</h5>
-                    <p class="card-text">Content: {{ tutorial.content }}</p>
-                    <p class="card-text">Video link:
-                        {% if tutorial.video_link %}
-                            <a href="{{ tutorial.video_link }}">Click here to go to the video</a>
-                        {% else %}
-                            No link provided
-                        {% endif %}</p>
-                    <p class="card-text">Author: <strong>{{ tutorial.created_by }}</strong></p>
-                    <p class="card-text"><small class="text-muted">Published: {{ tutorial.created_at }}</small></p>
+                             <h3 class="card-title"><strong>Tutorial Title:</strong> {{ tutorial.title }}</h3>
+                                    <p class="card-text"><strong>Content:</strong> {{ tutorial.content|truncatewords:50 }}</p>
+                                    <p class="card-text"><strong>Video link:</strong>                         
+                                        {% if tutorial.video_link %}
+                                            <a href="{{ tutorial.video_link }}">Click here to go to the video</a>
+                                        {% else %}
+                                            <strong class="text-muted">No link provided</strong>
+                                        {% endif %}
+                                    </p>
+                                    <p class="card-text"><strong>Author:</strong> {{ tutorial.created_by }}</p>
+                    <p class="card-text"><small class="text-muted"><strong>Published:</strong> {{ tutorial.created_at }}</small></p>
                 </div>
                 <div class="card-footer text-center">
                     <a href="{% url 'content:tutorial_detail' tutorial.id %}" class="btn btn-primary btn-sm">See More</a>

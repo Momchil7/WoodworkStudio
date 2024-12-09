@@ -26,10 +26,7 @@ class UserRegistrationForm(UserCreationForm):
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            # 'email': forms.TextInput(attrs={'class': 'form-control'}),
-            # 'profile_picture': forms.ClearableFileInput(attrs={'class': 'form-control'}),
-            # 'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
-            # 'password2': forms.PasswordInput(attrs={'class': 'form-control'}),
+
         }
 
     def __init__(self, *args, **kwargs):
@@ -42,10 +39,7 @@ class UserLoginForm(AuthenticationForm):
     """
     Custom login form.
     """
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Username'})
-    #     self.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Password'})
+
 
     def __init__(self, *args, **kwargs):
         super(UserLoginForm, self).__init__(*args, **kwargs)
@@ -77,15 +71,3 @@ class UserProfileForm(forms.ModelForm):
     )
 
 
-# class SearchForm(forms.Form):
-#     query = forms.CharField(
-#         label='',
-#         required=False,
-#         max_length=100,  # Allow for longer search queries
-#         widget=forms.TextInput(
-#             attrs={
-#                 'class': 'form-control',  # Bootstrap class for styling
-#                 'placeholder': 'Search for a post...',  # User-friendly placeholder
-#             }
-#         )
-#     )

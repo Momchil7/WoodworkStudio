@@ -1,231 +1,18 @@
-{#{% extends 'base.html' %}#}
-{#{% load static %}#}
-{#{% block content %}#}
-{##}
-{##}
-{#    <section id="details">#}
-{#        <div id="details-wrapper">#}
-{#            <h2>Tutorial Details</h2>#}
-{##}
-{#            <img#}
-{#                    id="details-img"#}
-{#                    src="{{ tutorial.images }}"#}
-{#                    alt="{{ tutorial.title }}"#}
-{#            />#}
-{##}
-{#            <p id="details-title">{{ tutorial.title }}</p>#}
-{#            <div id="info-wrapper">#}
-{#                <div id="details-description">#}
-{##}
-{#                    <p>Content: {{ tutorial.content }}</p>#}
-{#                    <p>Difficulty level: {{ tutorial.skill_level }}</p>#}
-{#                    <p>Video : {{ tutorial.video_link }}</p>#}
-{#                    <p><a href="{% url 'core:view_profile_by_username' tutorial.created_by.username %}">#}
-{#                        {{ tutorial.created_by.get_full_name|default:tutorial.created_by.username }}</a></p>#}
-{#                    <p>Project category: {{ tutorial.category }}</p>#}
-{#                </div>#}
-{##}
-{#                {% if tutorial.id in user_favorites %}#}
-{#                    <!-- Show remove favorite button -->#}
-{#                    <form method="post" action="{% url 'content:remove_favorite' tutorial.favorite_id %}">#}
-{#                        {% csrf_token %}#}
-{#                        <button type="submit" class="btn btn-danger">Remove Favorite</button>#}
-{#                    </form>#}
-{#                {% else %}#}
-{#                    <!-- Show add favorite button -->#}
-{#                    <form method="post" action="{% url 'content:add_favorite' tutorial.id %}">#}
-{#                        {% csrf_token %}#}
-{#                        <button type="submit" class="btn btn-primary">Add to Favorites</button>#}
-{#                    </form>#}
-{#                {% endif %}#}
-{##}
-{##}
-{#                {% if user.is_authenticated and user == tutorial.created_by %}#}
-{#                    <div id="action-buttons">#}
-{#                        <a href="{% url 'content:tutorial_edit' tutorial.id %}" id="edit-btn">Edit</a>#}
-{#                        <a href="{% url 'content:tutorial_delete' tutorial.id %}" id="delete-btn">Delete</a>#}
-{#                    </div>#}
-{#                {% endif %}#}
-{#            </div>#}
-{#        </div>#}
-{#    </section>#}
-{##}
-{#{% endblock %}#}
-
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
 
-    {#<section id="details">#}
-    {#    <div id="details-wrapper">#}
-    {#        <h2>Tutorial Details</h2>#}
-    {#    #}
-    {##}
-    {#        <p id="details-title">{{ tutorial.title }}</p>#}
-    {#        <div id="info-wrapper">#}
-    {#            <div id="details-description">#}
-    {#                <p>Content: {{ tutorial.content }}</p>#}
-    {#                <p>Difficulty level: {{ tutorial.skill_level }}</p>#}
-    {#                <p>Video: {{ tutorial.video_link }}</p>#}
-    {#                <p> Username:#}
-    {#                    <a href="{% url 'core:view_profile_by_username' tutorial.created_by.username %}">#}
-    {#                        {{ tutorial.created_by.username }}#}
-    {#                    </a>#}
-    {#                </p>#}
-    {#                <p>Project category: {{ tutorial.category }}</p>#}
-    {#            </div>#}
-    {##}
-    {#            <div id="favorite-button">#}
-    {#                {% if tutorial.id in user_favorites %}#}
-    {#                    <button#}
-    {#                        data-action="remove"#}
-    {#                        data-id="{{ tutorial.favorite_id }}"#}
-    {#                        class="favorite-btn btn btn-danger">#}
-    {#                        Remove Favorite#}
-    {#                    </button>#}
-    {#                {% else %}#}
-    {#                    <button#}
-    {#                        data-action="add"#}
-    {#                        data-id="{{ tutorial.id }}"#}
-    {#                        class="favorite-btn btn btn-primary">#}
-    {#                        Add to Favorites#}
-    {#                    </button>#}
-    {#                {% endif %}#}
-    {##}
-    {##}
-    {##}
-    {##}
-    {##}
-    {#            {% if user.is_authenticated and user == tutorial.created_by %}#}
-    {#                <div id="action-buttons">#}
-    {#                    <a href="{% url 'content:tutorial_edit' tutorial.id %}" id="edit-btn">Edit</a>#}
-    {#                    <a href="{% url 'content:tutorial_delete' tutorial.id %}" id="delete-btn">Delete</a>#}
-    {#                </div>#}
-    {#            {% endif %}#}
-    {#        </div>#}
-    {#    </div>#}
-    {#        </div>#}
-    {#</section>#}
 
-    {#    <div class="container py-5">#}
-    {#        <div class="card shadow-lg">#}
-    {#            <div class="card-header text-center">#}
-    {#                <h2 class="mb-0">Tutorial Details</h2>#}
-    {#            </div>#}
-    {#            <div class="card-body">#}
-    {#                <h5 class="card-title text-center mb-4">Tutorial Title: {{ tutorial.title }}</h5>#}
-    {##}
-    {#            <div class="row mb-4 align-items-center ">#}
-    {#                <div class="col-md-6">#}
-    {#                    <p><strong>Content:</strong> {{ tutorial.content }}</p>#}
-    {#                    <p><strong>Difficulty Level:</strong> {{ tutorial.skill_level }}</p>#}
-    {#                    <p><strong>Video Link:</strong> #}
-    {#                        {% if tutorial.video_link %}#}
-    {#                            <a href="{{ tutorial.video_link }}">Click here to go to the video</a>#}
-    {#                        {% else %}#}
-    {#                            No link provided#}
-    {#                        {% endif %}#}
-    {#                    </p>#}
-    {#                </div>#}
-    {#                <div class="col-md-6">#}
-    {#                    <p><strong>Author:</strong>#}
-    {#                        <a href="{% url 'core:view_profile_by_username' tutorial.created_by.username %}">#}
-    {#                            {{ tutorial.created_by.username }}#}
-    {#                        </a>#}
-    {#                    </p>#}
-    {#                    <p><strong>Category:</strong> {{ tutorial.category }}</p>#}
-    {#                </div>#}
-    {#            </div>#}
-    {##}
-    {#                <div class="row mb-4 align-items-center">#}
-    {#                    <div class="col-md-6 d-flex flex-column">#}
-    {#                        <p><strong>Content:</strong> {{ tutorial.content }}</p>#}
-    {#                        <p><strong>Difficulty Level:</strong> {{ tutorial.skill_level }}</p>#}
-    {#                        <p><strong>Video Link:</strong>#}
-    {#                            {% if tutorial.video_link %}#}
-    {#                                <a href="{{ tutorial.video_link }}">Click here to go to the video</a>#}
-    {#                            {% else %}#}
-    {#                                No link provided#}
-    {#                            {% endif %}#}
-    {#                        </p>#}
-    {#                    </div>#}
-    {#                    <div class="col-md-6 d-flex flex-column">#}
-    {#                        <p><strong>Author:</strong>#}
-    {#                            <a href="{% url 'core:view_profile_by_username' tutorial.created_by.username %}">#}
-    {#                                {{ tutorial.created_by.username }}#}
-    {#                            </a>#}
-    {#                        </p>#}
-    {#                        <p><strong>Category:</strong> {{ tutorial.category }}</p>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {##}
-    {#                <div class="col-md-6">#}
-    {#                    <h3 class="text">Tutorial: {{ tutorial.title }}</h3>#}
-    {#                    <ul class="list-group list-group-flush">#}
-    {#                        <li class="list-group-item">#}
-    {#                            <strong>Content:</strong> {{ tutorial.content }}#}
-    {#                        </li>#}
-    {#                        <li class="list-group-item">#}
-    {#                            <strong>Difficulty Level:</strong> {{ tutorial.skill_level }}#}
-    {#                        </li>#}
-    {#                        <li class="list-group-item">#}
-    {#                            <strong>Video Link:</strong>#}
-    {#                            {% if tutorial.video_link %}#}
-    {#                                <a href="{{ tutorial.video_link }}" target="_blank">Click here to go to the video</a>#}
-    {#                            {% else %}#}
-    {#                                No link provided#}
-    {#                            {% endif %}#}
-    {#                        </li>#}
-    {#                        <li class="list-group-item">#}
-    {#                            <strong>Author:</strong>#}
-    {#                            <a href="{% url 'core:view_profile_by_username' tutorial.created_by.username %}">#}
-    {#                                {{ tutorial.created_by.username }}#}
-    {#                            </a>#}
-    {#                        </li>#}
-    {#                        <li class="list-group-item">#}
-    {#                            <strong>Category:</strong> {{ tutorial.category }}#}
-    {#                        </li>#}
-    {#                    </ul>#}
-    {#                </div>#}
-    {##}
-    {##}
-    {#                <div class="text-center">#}
-    {#                    {% if tutorial.id in user_favorites %}#}
-    {#                        <button#}
-    {#                                data-action="remove"#}
-    {#                                data-id="{{ tutorial.favorite_id }}"#}
-    {#                                class="favorite-btn btn btn-danger">#}
-    {#                            Remove Favorite#}
-    {#                        </button>#}
-    {#                    {% else %}#}
-    {#                        <button#}
-    {#                                data-action="add"#}
-    {#                                data-id="{{ tutorial.id }}"#}
-    {#                                class="favorite-btn btn btn-primary">#}
-    {#                            Add to Favorites#}
-    {#                        </button>#}
-    {#                    {% endif %}#}
-    {#                </div>#}
-    {#            </div>#}
-    {##}
-    {#            {% if user.is_authenticated and user == tutorial.created_by %}#}
-    {#                <div class="card-footer text-center">#}
-    {#                    <a href="{% url 'content:tutorial_edit' tutorial.id %}" class="btn btn-warning btn-sm me-2">Edit</a>#}
-    {#                    <a href="{% url 'content:tutorial_delete' tutorial.id %}" class="btn btn-danger btn-sm">Delete</a>#}
-    {#                </div>#}
-    {#            {% endif %}#}
-    {#        </div>#}
-    {#    </div>#}
     <div class="container py-5">
         <div class="card shadow-lg mx-auto w-75">
             <div class="card-header text-center">
                 <h2 class="mb-0">Tutorial Details</h2>
             </div>
             <div class="card-body">
-                <h3 class="text-center mb-4">Tutorial: {{ tutorial.title }}</h3>
+                <h3 class="text-center mb-4">Tutorial Title: {{ tutorial.title }}</h3>
                 <ul class="list-group list-group-flush shadow-lg">
                     <li class="list-group-item " >
-                        <strong>Content:</strong> {{ tutorial.content }}
+                        <strong>Content:</strong> {{ tutorial.content }}<br>
                     </li>
                     <li class="list-group-item">
                         <strong>Difficulty Level:</strong> {{ tutorial.skill_level }}
@@ -235,7 +22,7 @@
                         {% if tutorial.video_link %}
                             <a href="{{ tutorial.video_link }}" target="_blank">Click here to go to the video</a>
                         {% else %}
-                            No link provided
+                            <strong class="text-muted">No link provided</strong>
                         {% endif %}
                     </li>
                     <li class="list-group-item">
@@ -250,21 +37,26 @@
                 </ul>
             </div>
             <div class="card-footer text-center">
-                {% if tutorial.id in user_favorites %}
-                    <button
-                            data-action="remove"
-                            data-id="{{ tutorial.favorite_id }}"
-                            class="favorite-btn btn btn-danger">
-                        Remove Favorite
-                    </button>
+                {% if user.is_authenticated %}
+                    {% if tutorial.id in user_favorites %}
+                        <button
+                                data-action="remove"
+                                data-id="{{ tutorial.favorite_id }}"
+                                class="favorite-btn btn btn-danger">
+                            Remove Favorite
+                        </button>
+                    {% else %}
+                        <button
+                                data-action="add"
+                                data-id="{{ tutorial.id }}"
+                                class="favorite-btn btn btn-primary">
+                            Add to Favorites
+                        </button>
+                    {% endif %}
                 {% else %}
-                    <button
-                            data-action="add"
-                            data-id="{{ tutorial.id }}"
-                            class="favorite-btn btn btn-primary">
-                        Add to Favorites
-                    </button>
+                    <p><a class="btn btn-primary btn-sm" href="{% url 'core:login' %}">Log in to save your favorite tutorials!</a></p>
                 {% endif %}
+
             </div>
             {% if user.is_authenticated and user == tutorial.created_by %}
                 <div class="card-footer text-center">
@@ -327,110 +119,6 @@
             });
         });
     </script>
-    {#document.addEventListener('DOMContentLoaded', function () {#}
-    {# const favoriteButtons = document.querySelectorAll('.favorite-btn');#}
-    {##}
-    {# favoriteButtons.forEach(button => {#}
-    {#     button.addEventListener('click', function (event) {#}
-    {#         event.preventDefault();#}
-    {##}
-    {#         const action = button.dataset.action;#}
-    {#         const id = button.dataset.id;#}
-    {#         const csrfToken = '{{ csrf_token }}';#}
-    {##}
-    {#         const url = action === 'add'#}
-    {#             ? `{% url 'content:add_favorite' 0 %}`.replace('0', id)#}
-    {#             : `{% url 'content:remove_favorite' 0 %}`.replace('0', id);#}
-    {##}
-    {#         fetch(url, {#}
-    {#             method: 'POST',#}
-    {#             headers: {#}
-    {#                 'X-CSRFToken': csrfToken,#}
-    {#                 'Content-Type': 'application/json',#}
-    {#             },#}
-    {#         })#}
-    {#         .then(response => response.json())#}
-    {#         .then(data => {#}
-    {#             if (data.success) {#}
-    {#                 if (action === 'add') {#}
-    {#                     // Change button to show "Remove Favorite"#}
-    {#                     button.dataset.action = 'remove';#}
-    {#                     button.dataset.id = data.favorite_id;#}
-    {#                     button.textContent = 'Remove Favorite';#}
-    {#                     button.classList.remove('btn-primary');#}
-    {#                     button.classList.add('btn-danger');#}
-    {#                 } else {#}
-    {#                     // Change button to show "Add to Favorites"#}
-    {#                     button.dataset.action = 'add';#}
-    {#                     button.dataset.id = data.tutorial_id;#}
-    {#                     button.textContent = 'Add to Favorites';#}
-    {#                     button.classList.remove('btn-danger');#}
-    {#                     button.classList.add('btn-primary');#}
-    {#                 }#}
-    {#             } else {#}
-    {#                 alert('An error occurred. Please try again.');#}
-    {#             }#}
-    {#         })#}
-    {#         .catch(error => console.error('Error:', error));#}
-    {#     });#}
-    {# });});#}
-
-    {##}
-    {#document.addEventListener('DOMContentLoaded', function () {#}
-    {#    const favoriteButtons = document.querySelectorAll('.favorite-btn');#}
-    {##}
-    {#    favoriteButtons.forEach(button => {#}
-    {#        button.addEventListener('click', function (event) {#}
-    {#            event.preventDefault();#}
-    {##}
-    {#            const action = button.dataset.action;#}
-    {#            const id = button.dataset.id;#}
-    {#            const csrfToken = '{{ csrf_token }}';#}
-    {##}
-    {#            // Validate `id`#}
-    {#            if (!id) {#}
-    {#                console.error('Missing tutorial ID.');#}
-    {#                return;#}
-    {#            }#}
-    {##}
-    {#            // Build URLs dynamically#}
-    {#            const addFavoriteURL = '{% url "content:add_favorite" 0 %}'.replace('0', id);#}
-    {#            const removeFavoriteURL = '{% url "content:remove_favorite" 0 %}'.replace('0', id);#}
-    {##}
-    {#            const url = action === 'add' ? addFavoriteURL : removeFavoriteURL;#}
-    {##}
-    {#            fetch(url, {#}
-    {#                method: 'POST',#}
-    {#                headers: {#}
-    {#                    'X-CSRFToken': csrfToken,#}
-    {#                    'Content-Type': 'application/json',#}
-    {#                },#}
-    {#            })#}
-    {#            .then(response => response.json())#}
-    {#            .then(data => {#}
-    {#                if (data.success) {#}
-    {#                    if (action === 'add') {#}
-    {#                        button.dataset.action = 'remove';#}
-    {#                        button.dataset.id = data.favorite_id;#}
-    {#                        button.textContent = 'Remove Favorite';#}
-    {#                        button.classList.remove('btn-primary');#}
-    {#                        button.classList.add('btn-danger');#}
-    {#                    } else {#}
-    {#                        button.dataset.action = 'add';#}
-    {#                        button.dataset.id = data.tutorial_id;#}
-    {#                        button.textContent = 'Add to Favorites';#}
-    {#                        button.classList.remove('btn-danger');#}
-    {#                        button.classList.add('btn-primary');#}
-    {#                    }#}
-    {#                } else {#}
-    {#                    alert('An error occurred. Please try again.');#}
-    {#                }#}
-    {#            })#}
-    {#            .catch(error => console.error('Error:', error));#}
-    {#        });#}
-    {#    });});#}
-    {#</script>#}
-
 
 
 {% endblock %}

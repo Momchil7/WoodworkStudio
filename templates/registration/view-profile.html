@@ -1,92 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    {#    <h1>Profile of {{ profile.username }}</h1>#}
-    {##}
-    {#    <ul>#}
-    {#        {% if profile.profile_picture %}#}
-    {#            <img#}
-    {#                    id="details-img"#}
-    {#                    class="rounded-circle w-25"#}
-    {#                    src="{{ profile.profile_picture.url }}"#}
-    {#                    alt="{{ profile.title }}"#}
-    {#            />#}
-    {#        {% else %}#}
-    {#            <p>No image available for this account.</p>#}
-    {#        {% endif %}#}
-    {#        <li><strong>Email:</strong> {{ profile.email }}</li>#}
-    {#        <li><strong>First Name:</strong> {{ profile.first_name }}</li>#}
-    {#        <li><strong>Last Name:</strong> {{ profile.last_name }}</li>#}
-    {#        <li><strong>Date Joined:</strong> {{ profile.date_joined }}</li>#}
-    {#        {% if user.is_authenticated and  profile.username!=user%}#}
-    {#        {% if profile.username != user.username %}#}
-    {#            {% if user.is_authenticated %}#}
-    {#                <li><strong>{{ profile.username }}'s favorites:</strong> <a class="btn btn-primary" href="{% url 'core:view_user_favorites' profile.username %}">View Favorites</a></li>#}
-    {#            {% else %}#}
-    {#                <li><strong>User favorites:</strong> <a class="btn btn-primary" href="{% url 'core:login' %}">Login or Register to view {{ profile.username }}'s favourites</a></li>#}
-    {#            {% endif %}#}
-    {#        {% endif %}#}
-    {#        <!-- Add any custom fields here -->#}
-    {#    </ul>#}
-    {##}
-    {#    {% if request.user == profile %}#}
-    {#        <a class="btn btn-primary" href="{% url 'core:profile' %}">Edit Your Profile</a>#}
-    {#    {% endif %}#}
-    
-    
-{#    <div class="container my-5">#}
-{#        <!-- Main Profile Card -->#}
-{#        <div class="card shadow-lg">#}
-{#            <div class="card-header text-center">#}
-{#                {% if profile.username != user.username %}#}
-{#                    <h4>Profile of {{ profile.username }}</h4>#}
-{#                {% else %}#}
-{#                    <h4>My Profile</h4>#}
-{#                {% endif %}#}
-{#            </div>#}
-{#            <div class="card-body">#}
-{#                <div class="text-center mb-4">#}
-{#                    {% if profile.profile_picture %}#}
-{#                        <img#}
-{#                                class="rounded-circle w-25"#}
-{#                                src="{{ profile.profile_picture.url }}"#}
-{#                                alt="{{ profile.username }}'s profile picture"#}
-{#                        />#}
-{#                    {% else %}#}
-{#                        <p class="text-muted">No image available for this account.</p>#}
-{#                    {% endif %}#}
-{#                </div>#}
-{##}
-{#                <ul class="list-unstyled">#}
-{#                    <li><strong>Email:</strong> {{ profile.email }}</li>#}
-{#                    <li><strong>First Name:</strong> {{ profile.first_name }}</li>#}
-{#                    <li><strong>Last Name:</strong> {{ profile.last_name }}</li>#}
-{#                    <li><strong>Date Joined:</strong> {{ profile.date_joined }}</li>#}
-{#                    <li><strong>Bio:</strong> {{ profile.bio }}</li>#}
-{#                </ul>#}
-{##}
-{#                {% if profile.username != user.username %}#}
-{#                    {% if user.is_authenticated %}#}
-{#                        <div class="text-center mt-3">#}
-{#                            <a class="btn btn-primary" href="{% url 'core:view_user_favorites' profile.username %}">View#}
-{#                                Favorites</a>#}
-{#                        </div>#}
-{#                    {% else %}#}
-{#                        <div class="text-center mt-3">#}
-{#                            <a class="btn btn-primary" href="{% url 'core:login' %}">Login or Register to#}
-{#                                view {{ profile.username }}'s favorites</a>#}
-{#                        </div>#}
-{#                    {% endif %}#}
-{#                {% endif %}#}
-{#            </div>#}
-{##}
-{#            <div class="card-footer text-center">#}
-{#                {% if request.user == profile %}#}
-{#                    <a class="btn btn-primary btn-sm" href="{% url 'core:profile' %}">Edit Your Profile</a>#}
-{#                {% endif %}#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
+
 
     <section class="container my-5">
     <div class="row justify-content-center">
@@ -111,31 +26,30 @@
                             <p class="text-muted">No image available for this account.</p>
                         {% endif %}
                     </div>
-
-                    <ul class="list-unstyled text-center">
-                        <li><strong>Email:</strong> {{ profile.email }}</li>
-                        <li><strong>First Name:</strong> {{ profile.first_name }}</li>
-                        <li><strong>Last Name:</strong> {{ profile.last_name }}</li>
-                        <li><strong>Date Joined:</strong> {{ profile.date_joined }}</li>
-                        <li><strong>Bio:</strong> {{ profile.bio }}</li>
-                    </ul>
+                        <ul class="list-unstyled text-center">
+                            <li><strong>Username:</strong> {{ profile.username }}</li>
+                            <li><strong>Email:</strong> {{ profile.email }}</li>
+                            <li><strong>First Name:</strong> {{ profile.first_name }}</li>
+                            <li><strong>Last Name:</strong> {{ profile.last_name }}</li>
+                            <li><strong>Date Joined:</strong> {{ profile.date_joined }}</li>
+                            <li><strong>Bio:</strong> {{ profile.bio }}</li>
+                        </ul>
 
                     {% if profile.username != user.username %}
                         {% if user.is_authenticated %}
-                            <div class="text-center mt-3">
-                                <a class="btn btn-primary btn-sm" href="{% url 'core:view_user_favorites' profile.username %}">View Favorites</a>
+                            <div class="text-center card-footer mt-3">
+                                <a class="btn btn-primary btn-sm" href="{% url 'core:view_user_favorites' profile.username %}">View {{ profile.username }}'s Favorites</a>
                             </div>
                         {% else %}
-                            <div class="text-center mt-3">
+                            <div class="text-center card-footer mt-3">
                                 <a class="btn btn-primary btn-sm" href="{% url 'core:login' %}">Login or Register to view {{ profile.username }}'s favorites</a>
                             </div>
                         {% endif %}
                     {% endif %}
                 </div>
-
-                <div class="card-footer text-center">
                     {% if request.user == profile %}
-                        <a class="btn btn-primary btn-sm" href="{% url 'core:profile' %}">Edit Your Profile</a>
+                        <div class="card-footer text-center">
+                            <a class="btn btn-primary btn-sm" href="{% url 'core:profile' %}">Edit Your Profile</a>
                     {% endif %}
                 </div>
             </div>

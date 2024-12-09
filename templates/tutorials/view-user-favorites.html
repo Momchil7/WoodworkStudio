@@ -1,65 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-
-{#<h2 class="text-center mb-5 pt-5">{{ viewed_user.username }}'s Favourites</h2>#}
-{#<section id="favorites-list">#}
-{#    {% if favorites %}#}
-{#        <div class="container">#}
-{#            <div class="row row-cols-1 row-cols-md-3 g-4">#}
-{#                {% for favorite in favorites %}#}
-{#                    <div class="col">#}
-{#                        <div class="card h-100 shadow-lg">#}
-{#                            <div class="card-body">#}
-{#                                <h5 class="card-title">{{ favorite.tutorial.title }}</h5>#}
-{#                                <p class="card-text">Description: {{ favorite.tutorial.content }}</p>#}
-{#                                <p class="card-text">Video link: <a href="{{ favorite.tutorial.video_link }}">Click here to go to the video</a></p>#}
-{#                                <p class="card-text">Author: <strong>{{ favorite.tutorial.created_by }}</strong></p>#}
-{#                                <p class="card-text text-muted">Published: {{ favorite.tutorial.created_at }}</p>#}
-{#                            </div>#}
-{#                                <div class="card-footer text-center">#}
-{#                                    <a href="{% url 'content:tutorial_detail' favorite.tutorial.id %}" class="btn btn-primary btn-sm">View Tutorial</a>#}
-{#                                </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#            </div>#}
-{#                {% endfor %}#}
-{#        </div>#}
-{#    {% else %}#}
-{#        <p>{{ viewed_user.username }} hasn't favorited any tutorials yet!</p>#}
-{#    {% endif %}#}
-{#</section>#}
-{#    <h2 class="text-center mb-5 pt-5">{{ viewed_user.username }}'s Favorites</h2>#}
-{##}
-{#<section id="favorites-list">#}
-{#    {% if favorites %}#}
-{#        <div class="container">#}
-{#            <div class="row row-cols-1 row-cols-md-3 g-4"> <!-- Responsive 3-column grid -->#}
-{#                {% for favorite in favorites %}#}
-{#                    <div class="col">#}
-{#                        <div class="card h-100 shadow-lg">#}
-{#                            <div class="card-body">#}
-{#                                <h5 class="card-title">Tutorial Title: {{ favorite.tutorial.title }}</h5>#}
-{#                                <p class="card-text">Description: {{ favorite.tutorial.content }}</p>#}
-{#                                <p class="card-text">Video link: <a href="{{ favorite.tutorial.video_link }}">Watch Video</a></p>#}
-{#                                <p class="card-text">Author: <strong>{{ favorite.tutorial.created_by }}</strong></p>#}
-{#                                <p class="card-text text-muted">Published: {{ favorite.tutorial.created_at }}</p>#}
-{#                            </div>#}
-{#                            <div class="card-footer text-center">#}
-{#                                <a href="{% url 'content:tutorial_detail' favorite.tutorial.id %}" class="btn btn-primary btn-sm">View Tutorial</a>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#        </div>#}
-{#    {% else %}#}
-{#        <div class="text-center mt-4">#}
-{#            <p>{{ viewed_user.username }} hasn't favorited any tutorials yet!</p>#}
-{#        </div>#}
-{#    {% endif %}#}
-{#</section>#}
+    
 
 <div class="container my-5">
     <!-- Main Card with Header -->
@@ -75,17 +17,17 @@
                             <div class="card h-100 shadow-sm">
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Tutorial Title: {{ favorite.tutorial.title }}</h5>
-                                    <p class="card-text">Description: {{ favorite.tutorial.content }}</p>
-                                    <p class="card-text">Video link:                                         
+                                    <h3 class="card-title"><strong>Tutorial Title:</strong> {{ favorite.tutorial.title|truncatechars:11 }}</h3>
+                                    <p class="card-text"><strong>Content:</strong> {{ favorite.tutorial.content|truncatewords:50 }}</p>
+                                    <p class="card-text"><strong>Video link:</strong>                                         
                                         {% if tutorial.video_link %}
                                             <a href="{{ tutorial.video_link }}">Click here to go to the video</a>
                                         {% else %}
-                                            No link provided
+                                            <strong class="text-muted">No link provided</strong>
                                         {% endif %}
                                     </p>
-                                    <p class="card-text">Author: <strong>{{ favorite.tutorial.created_by }}</strong></p>
-                                    <p class="card-text text-muted">Published: {{ favorite.tutorial.created_at }}</p>
+                                    <p class="card-text"><strong>Author:</strong> {{ favorite.tutorial.created_by }}</p>
+                                    <p class="card-text text-muted"><small class="text-muted"><strong>Published:</strong> {{ favorite.tutorial.created_at }}</small></p>
                                 </div>
                                 <div class="card-footer text-center">
                                     <a href="{% url 'content:tutorial_detail' favorite.tutorial.id %}" class="btn btn-primary btn-sm">View Tutorial</a>

@@ -90,28 +90,6 @@ class DirectPasswordResetView(View):
             return render(request, self.template_name)
 
 
-# class UserLoginView(LoginView):
-#     """
-#     Login view.
-#     """
-#     template_name = 'registration/login.html'
-
-# def user_login(request):
-#     """
-#     Function-based login view.
-#     """
-#     if request.method == 'POST':
-#         form = AuthenticationForm(data=request.POST)
-#         if form.is_valid():
-#             user = form.get_user()
-#             login(request, user)  # Log in the user
-#             return redirect('core:dashboard')  # Redirect to dashboard
-#     else:
-#         form = AuthenticationForm()
-#
-#     return render(request, 'registration/login.html', {'form': form})
-
-
 
 
 def user_login(request):
@@ -128,11 +106,7 @@ def user_login(request):
     return render(request, 'registration/login.html', {'form': form})
 
 
-# class UserLogoutView(LogoutView):
-#     """
-#     Logout view.
-#     """
-#     next_page = 'index'  # Redirect to index after logout
+
 
 @login_required
 def user_logout(request):
@@ -185,28 +159,5 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 
 
-# class DashboardView(LoginRequiredMixin, TemplateView):
-#     template_name = 'dashboard.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#
-#         # Add the search form to the context
-#         query = self.request.GET.get('query', '')
-#         search_form = SearchForm(self.request.GET or None)
-#
-#         # Filter projects and tutorials based on the query
-#         projects = Project.objects.filter(created_by=self.request.user).order_by('-created_at')
-#         tutorials = Tutorial.objects.filter(created_by=self.request.user).order_by('-created_at')
-#
-#         if query:
-#             projects = projects.filter(title__icontains=query)
-#             tutorials = tutorials.filter(title__icontains=query)
-#
-#         context['profile'] = self.request.user
-#         context['projects'] = projects
-#         context['tutorials'] = tutorials
-#         context['form'] = search_form  # Pass the form to the template
-#         context['query'] = query
-#         return context
+
 

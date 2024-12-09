@@ -3,46 +3,6 @@
 {% block content %}
 
 
-{#    {% if projects %}#}
-{#        <h1>#}
-{#            Gallery of Projects <br/>View and enjoy!#}
-{#        </h1>#}
-{#    {% else %}#}
-{##}
-{#        <h2>No published Projects yet...Come back later!</h2>#}
-{#    {% endif %}#}
-{##}
-{#    <section id="dashboard">#}
-{#        {% for project in projects %}#}
-{#            <div class="post">#}
-{#                {% if project.images %}#}
-{#                    <img#}
-{#                            id="details-img"#}
-{#                            src="{{ project.images.url }}"#}
-{#                            alt="{{ project.title }}"#}
-{#                    />#}
-{#                {% else %}#}
-{#                    <p>No image available for this project.</p>#}
-{#                {% endif %}#}
-{#                <h3 class="title">{{ project.title }}</h3>#}
-{#                <a href="{% url 'core:view_profile_by_username' project.created_by.username %}">#}
-{#                    {{ project.created_by.username }}#}
-{#                </a>#}
-{#                <p class="description">{{ project.description }}</p>#}
-{#                <a class="details-btn" href="{% url 'content:project_detail' project.id %}">See More</a>#}
-{#                <div class="card-body">#}
-{#                    <h3 class="card-title">Title: {{ project.title }}</h3>#}
-{#                    <p class="card-text">Description: {{ project.description }}</p>#}
-{#                    <p class="card-text">Author: {{ project.created_by }}</p>#}
-{#                    <p class="card-text"> Published: {{ project.created_at }}</p>#}
-{#                    <a href="{% url 'content:project_detail' project.id %}" #}
-{#                       class="btn btn-primary btn-sm">See More</a>#}
-{#                </div>#}
-{#            </div>#}
-{#        {% endfor %}#}
-{##}
-{##}
-{#    </section>#}
     <div class="container py-5">
     {% if projects %}
         <h1 class="text-center mb-4">
@@ -63,14 +23,17 @@
                         alt="{{ project.title }}"
                     />
                 {% else %}
-                    <p class="text-center text-muted p-3">No image available for this project.</p>
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                         style="height: 150px; color: #888;">
+                        No image available for this project.
+                    </div>
                 {% endif %}
 
                 <div class="card-body">
-                    <h5 class="card-title">Title: {{ project.title }}</h5>
-                    <p class="card-text">Description: {{ project.description }}</p>
-                    <p class="card-text">Author: <strong>{{ project.created_by }}</strong></p>
-                    <p class="card-text"><small class="text-muted">Published: {{ project.created_at }}</small></p>
+                    <h5 class="card-title"><strong>Project Title:</strong> {{ project.title }}</h5>
+                    <p class="card-text"><strong>Description:</strong> {{ project.description|truncatewords:10 }}</p>
+                    <p class="card-text"><strong>Author:</strong> {{ project.created_by }}</p>
+                    <p class="card-text"><small class="text-muted"><strong>Published:</strong> {{ project.created_at }}</small></p>
                 </div>
                 <div class="card-footer text-center">
                     <a href="{% url 'content:project_detail' project.id %}" class="btn btn-primary btn-sm">See More</a>

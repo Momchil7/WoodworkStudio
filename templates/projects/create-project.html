@@ -1,19 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-    {#    <section id="create">#}
-    {#        <div class="form">#}
-    {#            <h2>New Project</h2>#}
-    {#            <form method="post" action="{% url 'content:project_create' %}" enctype="multipart/form-data">#}
-    {#                {% csrf_token %}#}
-    {#                {{ form.as_p }}#}
-    {#                <input type="file" name="images" id="file" >#}
-    {#                <button type="submit" class="btn btn-primary">Save Changes</button>#}
-    {#                <a href="{% url 'core:dashboard' %}" class="btn btn-primary">Cancel</a>#}
-    {#            </form>#}
-    {#        </div>#}
-    {#    </section>#}
+    
 
     <div class="container py-5">
         <div class="row justify-content-center">
@@ -28,7 +16,7 @@
                             <div class="mb-3">
                                 {{ form.as_p }}
                             </div>
-                            <div class="text-center">
+                            <div class="text-center card-footer">
                                 <button type="submit" class="btn btn-primary btn-sm me-2">Create Project</button>
                                 <a href="{% url 'core:dashboard' %}" class="btn btn-secondary btn-sm">Cancel</a>
                             </div>
@@ -41,5 +29,3 @@
 
 
 {% endblock %}
-
-{#                {% include 'projects/test_upload.html' %}#}
