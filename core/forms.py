@@ -4,9 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from .models import User
 
 class UserRegistrationForm(UserCreationForm):
-    """
-    Form for user registration.
-    """
+# форма за регистрация - наследяваме и разширяваме
     email = forms.EmailField(required=True,  widget=forms.TextInput(attrs={'class': 'form-control'}))
     profile_picture = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'class': 'form-control'}))
 
@@ -20,6 +18,7 @@ class UserRegistrationForm(UserCreationForm):
     )
 
     class Meta:
+        # задаваме модел и полета за формата
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'profile_picture', 'password1', 'password2']
         widgets = {
@@ -31,14 +30,12 @@ class UserRegistrationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Remove help text
+        # премахваме хелп тект от формата
         for field_name, field in self.fields.items():
             field.help_text = ''
 
 class UserLoginForm(AuthenticationForm):
-    """
-    Custom login form.
-    """
+# персонализирана логин форма
 
 
     def __init__(self, *args, **kwargs):
@@ -48,9 +45,7 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserProfileForm(forms.ModelForm):
-    """
-    Form for updating user profiles.
-    """
+
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'bio', 'profile_picture']

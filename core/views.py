@@ -31,15 +31,13 @@ from django.shortcuts import get_object_or_404
 
 
 class UserProfileView(DetailView):
-    """
-    View for displaying a user's profile.
-    """
+#вю за вю на юзър - публично
     model = User
     template_name = 'registration/view-profile.html'
     context_object_name = 'profile'
 
     def get_object(self, queryset=None):
-        # Retrieve the user based on a URL parameter (e.g., `username`) or default to the current user
+        # взимане на юзър по УРЛ параметър или дефолт по кърент юзър
         username = self.kwargs.get('username')
         if username:
             return get_object_or_404(User, username=username)
@@ -47,16 +45,14 @@ class UserProfileView(DetailView):
 
 
 class UserRegistrationView(CreateView):
-    """
-    View for user registration.
-    """
+
     form_class = UserRegistrationForm
     template_name = 'registration/register.html'
-    success_url = reverse_lazy('core:dashboard')  # Redirect after successful registration
+    success_url = reverse_lazy('core:dashboard')  # редирект при успешно регистриране
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        login(self.request, self.object)  # Automatically log in the user
+        login(self.request, self.object)  # автоматично логване
         return response
 
 
@@ -116,17 +112,15 @@ def user_logout(request):
 
 
 class UserProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    """
-    View for updating user profile.
-    """
+
     model = User
     form_class = UserProfileForm
     template_name = 'registration/update-profile.html'
-    # success_url = reverse_lazy('core:dashboard')  # Redirect after update
+
     success_message = "Your profile was updated successfully!"
 
     def get_success_url(self):
-        # Redirect to the edit page of the current project
+
         return reverse('core:view_profile')
 
     def get_object(self, queryset=None):
@@ -135,9 +129,7 @@ class UserProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
 
 
 def index(request):
-    """
-    Public landing page.
-    """
+
     projects = Project.objects.all()
     context = {'projects': projects}
     return render(request, 'index.html', context)
@@ -146,9 +138,7 @@ def index(request):
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
-    """
-    Private dashboard for authenticated users.
-    """
+
     template_name = 'dashboard.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

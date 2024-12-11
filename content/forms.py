@@ -6,9 +6,7 @@ from .models import Tutorial
 from .models import Favorite
 
 class ProjectForm(forms.ModelForm):
-    """
-    Form for creating and editing projects.
-    """
+#форма за създаване и редактиране на проекти. клас Meta определя кой е модела.widgets настроят класовете на HTML елементите.
     class Meta:
         model = Project
         fields = ['title', 'description', 'difficulty', 'materials_used', 'category', 'images'
@@ -29,9 +27,7 @@ class ProjectForm(forms.ModelForm):
 
 
 class TutorialForm(forms.ModelForm):
-    """
-    Form for creating and editing tutorials.
-    """
+    # форма за създаване на турориали
     class Meta:
         model = Tutorial
         fields = ['title', 'content', 'video_link', 'skill_level', 'category']
@@ -49,9 +45,7 @@ class TutorialForm(forms.ModelForm):
 
 
 class FavoriteForm(forms.ModelForm):
-    """
-    Form for managing tutorial favorites.
-    """
+ # форма за любими
     class Meta:
         model = Favorite
         fields = ['tutorial']

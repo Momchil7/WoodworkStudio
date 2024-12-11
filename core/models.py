@@ -8,9 +8,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 class User(AbstractUser):
-    """
-    Custom User model extending the default Django User model.
-    """
+    # разширява стандартния модел  на  потребителя  в Django
     ROLE_CHOICES = [
         ('user', 'User'),
         ('staff', 'Staff'),

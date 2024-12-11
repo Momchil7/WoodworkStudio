@@ -35,17 +35,17 @@ class TestProjectListView(TestCase):
 
 class TestProjectDetailView(TestCase):
     def setUp(self):
-        # Initialize RequestFactory
+        # инициализиране на  RequestFactory() за симулирани заявки
         self.factory = RequestFactory()
 
-        # Create a user
+        # създаваме потребител
         self.user = User.objects.create_user(
             username="testuser",
             email="testuser@example.com",
             password="password123"
         )
 
-        # Create a project associated with the user
+        # създаване на проект с свързан юзър
         self.project = Project.objects.create(
             title="Test Project",
             description="Test Description",
@@ -54,17 +54,17 @@ class TestProjectDetailView(TestCase):
         )
 
     def test__project_detail_view__renders_correct_template(self):
-        # Generate the request using the factory
+        # създаване на рекуеста
         request = self.factory.get(reverse('content:project_detail', kwargs={'pk': self.project.pk}))
         request.user = self.user  # Assign an authenticated user
 
-        # Call the view directly with the request and kwargs
+        # извикване на вюто с аргумент
         response = ProjectDetailView.as_view()(request, pk=self.project.pk)
 
-        # Check the response status code
+        # проверка на статуса
         self.assertEqual(response.status_code, 200)
 
-        # Verify the template used (directly check `response.template_name`)
+        # проверка на заявка, дали е генериран отговор с шаблона projects/details-project.html
         self.assertIn('projects/details-project.html', response.template_name)
 
 
@@ -76,34 +76,34 @@ class TestTutorialListView(TestCase):
         self.factory = RequestFactory()
 
     def test__tutorial_list_view__renders_correct_template(self):
-        # Create a request and manually set the user (AnonymousUser for unauthenticated tests)
+        # създаване на заявка с анонимен потребител
         request = self.factory.get(reverse('content:tutorial_list'))
         request.user = AnonymousUser()  # Or use a real user if needed
 
-        # Call the view with the request
+        # извикване на вюто с рекуеста
         response = TutorialListView.as_view()(request)
 
-        # Verify response status code
+        # проверка на код
         self.assertEqual(response.status_code, 200)
 
-        # Check if the correct template is used
+        # проверка за правилен шаблон
         self.assertIn('tutorials/list-tutorials.html', response.template_name)
 
 
 
 class TestTutorialDetailView(TestCase):
     def setUp(self):
-        # Initialize RequestFactory
+
         self.factory = RequestFactory()
 
-        # Create a user
+        # създаване на потребител
         self.user = User.objects.create_user(
             username="testuser",
             email="testuser@example.com",
             password="password123"
         )
 
-        # Create a project associated with the user
+        # създаване на туториал с асоцийран потребител
         self.tutorial = Tutorial.objects.create(
             title="Test tutorial",
             content="Test content",
@@ -112,20 +112,17 @@ class TestTutorialDetailView(TestCase):
         )
 
     def test__tutorial_detail_view__renders_correct_template(self):
-        # request = self.factory.get(reverse('content:tutorial_detail', kwargs={'pk': self.tutorial.pk}))
-        # response = TutorialDetailView.as_view()(request, pk=self.tutorial.pk)
-        # self.assertEqual(response.status_code, 200)
-        # self.assertTemplateUsed(response, 'tutorials/details-tutorials.html')
+        # GET заявка към URL-а, който води към tutorial_detail с пк на туториала
         request = self.factory.get(reverse('content:tutorial_detail', kwargs={'pk': self.tutorial.pk}))
         request.user = self.user  # Assign an authenticated user
 
-        # Call the view directly with the request and kwargs
+        #  извикване на вю с рикуеста и пк
         response = TutorialDetailView.as_view()(request, pk=self.tutorial.pk)
 
-        # Check the response status code
+        # проверка на статуса
         self.assertEqual(response.status_code, 200)
 
-        # Verify the template used (directly check `response.template_name`)
+        # проверка за правилен шаблон
         self.assertIn('tutorials/details-tutorials.html', response.template_name)
 
 
@@ -142,16 +139,17 @@ class TestFavoriteViews(TestCase):
         )
         self.client.login(username="testuser", password="password123")
 
+    # тестване добавяне на "favorite" и правилен запис в базата данни.
     def test__add_favorite__creates_favorite(self):
         response = self.client.post(reverse('content:add_favorite', kwargs={'tutorial_id': self.tutorial.id}))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Favorite.objects.filter(user=self.user, tutorial=self.tutorial).exists())
 
     def test__remove_favorite__deletes_favorite(self):
-        favorite = Favorite.objects.create(user=self.user, tutorial=self.tutorial)
-        response = self.client.post(reverse('content:remove_favorite', kwargs={'favorite_id': favorite.id}))
-        self.assertEqual(response.status_code, 200)
-        self.assertFalse(Favorite.objects.filter(id=favorite.id).exists())
+        favorite = Favorite.objects.create(user=self.user, tutorial=self.tutorial) #запис в базата данни за "favorite", който свързва потребителя и tutorial
+        response = self.client.post(reverse('content:remove_favorite', kwargs={'favorite_id': favorite.id}))#POST заявка за премахване на любим tutorial
+        self.assertEqual(response.status_code, 200)#
+        self.assertFalse(Favorite.objects.filter(id=favorite.id).exists())#
 
 
 class TestViewUserFavorites(TestCase):

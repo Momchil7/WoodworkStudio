@@ -100,7 +100,7 @@ class TestIndexViewIntegration(TestCase):
         response = self.client.get(reverse("core:index"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "index.html")
-        # self.assertContains(response, "Test Project")
+
 
 
 class TestIndexViewUnit(TestCase):
@@ -121,7 +121,7 @@ class TestIndexViewUnit(TestCase):
         request.user = self.user
         response = index(request)
         self.assertEqual(response.status_code, 200)
-        # self.assertContains(response, "Test Project")
+
 
     def test__unauthenticated_user__renders_index_page(self):
         request = self.factory.get(reverse("core:index"))

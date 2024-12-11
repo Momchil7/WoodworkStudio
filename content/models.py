@@ -9,9 +9,7 @@ from core.models import User
 
 
 class Category(models.Model):
-    """
-    Categories for Projects or Tutorials (e.g., Furniture, Carving, Tools).
-    """
+
     CATEGORY_CHOICES = [
         ('tables', 'Tables'),
         ('chairs', 'Chairs'),
@@ -31,9 +29,7 @@ class Category(models.Model):
 
 
 class Project(models.Model):
-    """
-    Woodworking Project model.
-    """
+# модел за проекти
     DIFFICULTY_LEVELS = [
         ('beginner', 'Beginner'),
         ('intermediate', 'Intermediate'),
@@ -54,9 +50,7 @@ class Project(models.Model):
 
 
 class Tutorial(models.Model):
-    """
-    Tutorials for woodworking skills and techniques.
-    """
+#модел за турориали
     SKILL_LEVELS = [
         ('beginner', 'Beginner'),
         ('intermediate', 'Intermediate'),
@@ -76,9 +70,7 @@ class Tutorial(models.Model):
 
 
 class Favorite(models.Model):
-    """
-    Allows users to bookmark tutorials they want to revisit.
-    """
+# модел за любими
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE, related_name='favorited_by')
 

@@ -23,41 +23,39 @@ from django.contrib.auth.decorators import login_required
 from .models import Favorite, Tutorial
 
 class ProjectListView(ListView):
-    """
-    View to list all projects (public).
-    """
+# публично вю за разглеждане на проекти
     model = Project
     template_name = 'projects/list-projects.html'
     context_object_name = 'projects'
 
 class ProjectDetailView(DetailView):
-    """
-    View to display project details (public).
-    """
+    # публично вю за разглеждане на детайли на проекти
     model = Project
     template_name = 'projects/details-project.html'
     context_object_name = 'project'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Fetch a tutorial to pass to the context
+        context = super().get_context_data(**kwargs) #добавяне на допълнителни данни в контекста
+        # подаване на проект към контекста
         context['tutorial'] = Tutorial.objects.order_by('-created_at').first()  # Latest tutorial
         return context
 
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
-    """
-    View to create a new project.
-    """
+    # прайвът вю за създаване на проекти, позлва LoginRequiredMixin проверка на тип юзър и CreateView за създаване на нови записи.
+    # проектът се създава и се свързва с потребителя, който го е създал.
     model = Project
     form_class = ProjectForm
     template_name = 'projects/create-project.html'
     success_url = reverse_lazy('core:dashboard')
 
     def form_valid(self, form):
+        # опционално задаване на данни
         photo = form.save(commit=False)
         photo.user = self.request.user
+        # сетване на created_by полето за текущ юзър
         form.instance.created_by = self.request.user
+        # достъп до родителския клас, като преди това добавим наша логика,
         return super().form_valid(form)
 
 
@@ -68,26 +66,23 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'projects/edit-project.html'
 
     def get_success_url(self):
-        # Redirect to the edit page of the current project
+        # редирект към страницата за едитване на проекта
         return reverse('content:project_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        # Set the created_by field to the current user
+        # сетване на created_by полето за текущ юзър
         form.instance.created_by = self.request.user
-
-        # Optionally set other fields if needed
+        # опжионално задаване на данни
         photo = form.save(commit=False)
         photo.user = self.request.user
-
+        # достъп до родителския клас с наша логика,
         return super().form_valid(form)
 
 
 
 
 class ProjectDeleteView(LoginRequiredMixin, DeleteView):
-    """
-    View to delete a project.
-    """
+# изтриване на проект - не публично
     model = Project
     template_name = 'projects/delete-project.html'
     success_url = reverse_lazy('core:dashboard')
@@ -96,38 +91,30 @@ class ProjectDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class TutorialListView(ListView):
-    """
-    View to list all tutorials (public).
-    """
+# вю за преглеждане на туториали
     model = Tutorial
     template_name = 'tutorials/list-tutorials.html'
     context_object_name = 'tutorials'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Add user favorites to the context
-        # user_favorites = Favorite.objects.filter(user=self.request.user).values_list('tutorial_id', flat=True)
         if self.request.user.is_authenticated:
-            # Add user favorites to the context if logged in
+            # добавяме любими към контекста ако сме логнати
             user_favorites = Favorite.objects.filter(user=self.request.user).values_list('tutorial_id', flat=True)
         else:
-            # Provide an empty list for unauthenticated users
+            # добавяме празен лист към контекста ако НЕ сме логнати
             user_favorites = []
         context['user_favorites'] = user_favorites
         return context
 
 class TutorialDetailView(DetailView):
-    """
-    View to display tutorial details (public).
-    """
+# детайли за проекта - публично
     model = Tutorial
     template_name = 'tutorials/details-tutorials.html'
 
 
 class TutorialCreateView(LoginRequiredMixin, CreateView):
-    """
-    View to create a new tutorial.
-    """
+# вю за създаване на проект - не публично
     model = Tutorial
     form_class = TutorialForm
     template_name = 'tutorials/create-tutorials.html'
@@ -138,21 +125,17 @@ class TutorialCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 class TutorialUpdateView(LoginRequiredMixin, UpdateView):
-    """
-    View to edit an existing tutorial.
-    """
+# вю за едитване на съществуващ проект
     model = Tutorial
     form_class = TutorialForm
     template_name = 'tutorials/edit-tutorials.html'
 
     def get_success_url(self):
-        # Redirect to the edit page of the current project
+        # редиректване към tutorial_detail на конкретния проект след едит
         return reverse('content:tutorial_detail', kwargs={'pk': self.object.pk})
 
 class TutorialDeleteView(LoginRequiredMixin, DeleteView):
-    """
-    View to delete a tutorial.
-    """
+
     model = Tutorial
     template_name = 'tutorials/delete-tutorials.html'
     success_url = reverse_lazy('core:dashboard')
@@ -160,29 +143,32 @@ class TutorialDeleteView(LoginRequiredMixin, DeleteView):
 
 @login_required
 def add_favorite(request, tutorial_id):
-    """
-    Add a tutorial to favorites.
-    """
+    # взима tutorial от базата по  id ако няма такова връща 404
     tutorial = get_object_or_404(Tutorial, id=tutorial_id)
+    # търсим в базата за свързан любим туториал с потребител(created=False), ако няма такъв го създава
     favorite, created = Favorite.objects.get_or_create(user=request.user, tutorial=tutorial)
+    # за JS скрипта - JSON отговор, който съдържа информация за успеха и ID-то на ново или съществуващо любимo
     return JsonResponse({'success': True, 'favorite_id': favorite.id})
 
 
 @login_required
 def remove_favorite(request, favorite_id):
-    """
-    Remove a tutorial from favorites.
-    """
+
     favorite = get_object_or_404(Favorite, id=favorite_id, user=request.user)
-    tutorial_id = favorite.tutorial.id  # Save tutorial ID before deleting
+    # запазване на туториала преди изтриване
+    tutorial_id = favorite.tutorial.id
     favorite.delete()
+    # за JS скрипта - JSON отговор, който съдържа информация за успеха и ID-то на tutorial-а, който е бил премахнат от любими
     return JsonResponse({'success': True, 'tutorial_id': tutorial_id})
 
 
 @login_required
 def view_user_favorites(request, username):
     viewed_user = get_object_or_404(User, username=username)
+    # извлича всички записи от таблицата Favorite, които принадлежат на преглеждания потребител
+    # select_related - ефективна SQL заявка, вместо да се правят отделни заявки за всеки tutorial
     favorites = Favorite.objects.filter(user=viewed_user).select_related('tutorial')
+    #при рендериране на шаблона подаваме две променливи в контекста,
     return render(request, 'tutorials/view-user-favorites.html', {
         'favorites': favorites,
         'viewed_user': viewed_user
@@ -191,6 +177,7 @@ def view_user_favorites(request, username):
 @login_required
 def user_favorites(request):
     favorites = Favorite.objects.filter(user=request.user).select_related('tutorial')
+    # подаваме променливата favorites, съдържаща  всички любими туториали на текущия потребител
     return render(request, 'tutorials/user-favorites.html', {
         'favorites': favorites,
     })
